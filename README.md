@@ -76,3 +76,7 @@
 - メモ絞り込み機能（Form Object）
 - Xシェア機能（gem meta-tags,mini_magick）
 - 利用規約・プライバシーポリシー（gem 'high_voltage'）
+
+# 画面遷移図
+
+https://www.figma.com/design/flCQSvzWpWuUacI3W6tIHO/MinaraiMemo?node-id=0-1&p=f&t=YpIP3TaoC9aX6Yhr-0
