@@ -80,3 +80,7 @@
 # 画面遷移図
 
 https://www.figma.com/design/flCQSvzWpWuUacI3W6tIHO/MinaraiMemo?node-id=0-1&p=f&t=YpIP3TaoC9aX6Yhr-0
+
+# ER図
+
+https://gyazo.com/9de4b18cadc4601d3ea0312785b27657
