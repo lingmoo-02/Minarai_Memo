@@ -83,4 +83,4 @@ https://www.figma.com/design/flCQSvzWpWuUacI3W6tIHO/MinaraiMemo?node-id=0-1&p=f&
 
 # ER図
 
-https://gyazo.com/9de4b18cadc4601d3ea0312785b27657
+![見習いメモ (5)](https://github.com/user-attachments/assets/6a471fd4-c118-4e2e-8b5a-3fbb12261962)
