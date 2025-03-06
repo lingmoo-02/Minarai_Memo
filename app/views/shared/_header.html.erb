@@ -1,11 +1,17 @@
 <header class="bg-white shadow-md">
     <div class="container mx-auto flex justify-between items-center p-4">
         <h1><%= link_to "見習いノート", root_path, class: "text-2xl font-bold text-blue-600" %></h1>
-        <nav>
+        <nav class="ml-auto">
             <ul class="flex space-x-6">
                 <% if user_signed_in? %>
                     <li>
-                        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+                        <%= link_to "一覧を表示", notes_path, class: "text-gray-700 hover:text-blue-600" %>
+                    </li>
+                    <li>
+                        <%= link_to "作成する", new_note_path, class: "text-gray-700 hover:text-blue-600" %>
+                    </li>
+                    <li>
+                        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-gray-700 hover:text-red-600" %>
                     </li>
                 <% else %>
                     <li>
