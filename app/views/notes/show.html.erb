@@ -3,8 +3,8 @@
 <%= render @note %>
 
 <div>
-  <%= link_to "Edit this note", edit_note_path(@note) %> |
-  <%= link_to "Back to notes", notes_path %>
+  <%= link_to "編集する", edit_note_path(@note) %> |
+  <%= link_to "一覧へ戻る", notes_path %>
 
-  <%= button_to "Destroy this note", @note, method: :delete %>
+  <%= button_to "削除", @note, method: :delete %>
 </div>

@@ -1,7 +1,26 @@
-<div id="<%= dom_id note %>">
-  <p>
-    <strong>Title:</strong>
-    <%= note.title %>
-  </p>
-
+<div class="col-sm-12 col-lg-4 mb-3">
+  <div id="note-id-<%= note.id %>">
+    <div class="card">
+      <%= image_tag "note_placeholder.png", class: "card-img-top", width: "300", height:"200" %>
+      <div class="card-body">
+        <div class="d-flex">
+          <h4 class="card-title">
+            <%= link_to note.title, note %>
+          </h4>
+          <div class='ms-auto'>
+            <%= link_to edit_note_path "編集", id: 'button-edit-#{note.id}' do %>
+              <i class="bi bi-pencil-fill"></i>
+            <% end %>
+            <%= link_to '#', id: 'button-delete-#{note.id}', method: :delete, data: {confirm: ''} do %>
+              <i class="bi bi-trash-fill"></i>
+            <% end %>
+          </div>
+        </div>
+        <ul class="list-inline">
+          <li><i class="bi bi-person"></i><%= note.user.name %></li>
+          <li><i class="bi bi-calendar"></i><%= l note.created_at, format: :short %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
