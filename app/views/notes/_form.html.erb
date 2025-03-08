@@ -20,6 +20,11 @@
         </div>
 
         <div>
+          <%= form.label :body, style: "display: block", rows: "10" %>
+          <%= form.text_field :body %>
+        </div>
+
+        <div>
           <%= form.submit "ノートを作成", class: "btn btn-primary" %>
         </div>
       <% end %>
