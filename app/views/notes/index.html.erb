@@ -1,27 +1,39 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Notes" %>
-<div class="container mx-auto pt-10 md:px-0 px-6">
-  <h1 class="text-brown font-bold text-2xl md:text-5xl text-center">ノート一覧</h1>
-
-  <div class="row">
-    <div class="col-12">
-      <div class="row">
-        <% if @notes.present? %>
-          <% render @notes %>
-        <% else %>
-          <div class="mb-3">ノートがありません</div>
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <% if @notes.present? %>
+        <% @notes.each do |note| %>
+          <div class="col-sm-12 col-lg-4 mb-3">
+            <div id="note-id-<%= note.id %>">
+              <div class="card">
+                <%= image_tag "note_placeholder.png", class: "card-img-top", width: "300", height:"200" %>
+                <div class="card-body">
+                  <div class="d-flex">
+                    <h4 class="card-title">
+                      <%= link_to note.title, note_path(note) %>
+                    </h4>
+                    <div class='ms-auto'>
+                      <%= link_to '#', id: "button-edit-#{note.id}" do %>
+                        <i class="bi bi-pencil-fill"></i>
+                      <% end %>
+                      <%= link_to '#', id: "button-delete-#{note.id}", method: :delete, data: {confirm: ''} do %>
+                        <i class="bi bi-trash-fill"></i>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="list-inline">
+                    <li><i class="bi bi-person"></i><%= note.user.decorate.full_name %></li>
+                    <li><i class="bi bi-calendar"></i><%= l note.created_at, format: :short %></li>
+                  </ul>
+                  <p class="card-text">本文</p>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
-      </div>
+      <% else %>
+        <div class="mb-3">ノートがありません</div>
+      <% end %>
     </div>
-  </div>
-
-  <div id="notes">
-    <% @notes.each do |note| %>
-      <%= render note %>
-      <p>
-        <%= link_to "Show this note", note, class: "text-blue-500 hover:underline" %>
-      </p>
-    <% end %>
   </div>
 </div>
