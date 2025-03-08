@@ -1,0 +1,8 @@
+ja:
+  hello: "こんにちは"
+  devise:
+    sessions:
+      signed_in: "ログインしました"
+      signed_out: "ログアウトしました"
+    failure:
+      invalid: "メールアドレスまたはパスワードが違います"
