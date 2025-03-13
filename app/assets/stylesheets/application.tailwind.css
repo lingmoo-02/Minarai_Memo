@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "top";
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
