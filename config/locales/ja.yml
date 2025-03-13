@@ -81,4 +81,9 @@ ja:
               blank: "メールアドレスを入力してください"
             password:
               blank: "パスワードを入力してください"
-            
+    attributes:
+      user:
+      board:
+        title: タイトル
+        body: 本文
+        note_image: 写真
