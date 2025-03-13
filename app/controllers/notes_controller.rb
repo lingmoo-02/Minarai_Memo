@@ -25,7 +25,7 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
-        format.html { redirect_to @note, notice: "Note was successfully created." }
+        format.html { redirect_to @note, notice: "ノートが作成されました" }
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to @note, notice: "Note was successfully updated." }
+        format.html { redirect_to @note, notice: "ノートが更新されました" }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit, status: :unprocessable_entity }

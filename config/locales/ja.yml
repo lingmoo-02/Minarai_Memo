@@ -12,7 +12,7 @@ ja:
     failure:
       already_authenticated: "すでにログインしています。"
       inactive: "アカウントがまだ有効化されていません。"
-      invalid: "無効な%{authentication_keys}またはパスワードです。"
+      invalid: "メールアドレスまたはパスワードが違います。"
       locked: "アカウントがロックされています。"
       last_attempt: "アカウントがロックされる前に、あと1回試行できます。"
       not_found_in_database: "無効な%{authentication_keys}またはパスワードです。"
@@ -66,3 +66,19 @@ ja:
       not_saved:
         one: "1件のエラーが発生し、%{resource}を保存できませんでした。"
         other: "%{count}件のエラーが発生し、%{resource}を保存できませんでした。"
+  activerecord:
+    errors:
+      models:
+        note:
+          attributes:
+            title:
+              blank: ""
+            body:
+              blank: ""
+        user:
+          attributes:
+            email:
+              blank: "メールアドレスを入力してください"
+            password:
+              blank: "パスワードを入力してください"
+            

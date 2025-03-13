@@ -15,7 +15,9 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   # def destroy
-  #   super
+  #   session.delete(:current_user_id)
+  #   flash[:notice] = "ログアウトしました"
+  #   redirect_to root_path
   # end
 
   protected
@@ -32,6 +34,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # サインアウト後のリダイレクト先を指定する
   def after_sign_out_path_for(resource_or_scope)
-    new_user_session_path
+    flash[:notice] = "ログアウトしました"
+    root_path
   end
 end
