@@ -25,6 +25,12 @@
         </div>
 
         <div>
+          <%= form.label :note_image, "完成写真" %><br>
+          <%= form.file_field :note_image, class: "form-control", accept: 'image/*' %>
+          <%= form.hidden_field :note_image_cache %>
+        </div>
+
+        <div>
           <%= form.submit "ノートを作成", class: "btn btn-primary" %>
         </div>
       <% end %>
