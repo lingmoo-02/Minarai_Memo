@@ -52,7 +52,7 @@ class NotesController < ApplicationController
     @note.destroy!
 
     respond_to do |format|
-      format.html { redirect_to notes_path, status: :see_other, notice: "Note was successfully destroyed." }
+      format.html { redirect_to notes_path, status: :see_other, notice: "ノートを削除しました" }
       format.json { head :no_content }
     end
   end
