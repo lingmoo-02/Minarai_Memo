@@ -3,7 +3,7 @@ class NotesController < ApplicationController
 
   # GET /notes or /notes.json
   def index
-    @notes = Note.includes(:user)
+    @notes = current_user.notes
   end
 
   # GET /notes/1 or /notes/1.json
