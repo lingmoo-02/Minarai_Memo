@@ -1,7 +1,6 @@
-<header class="bg-white shadow-md">
+<header class="bg-gray-100">
     <div class="container mx-auto flex justify-between items-center p-4">
-        <h1><%= link_to "見習いノート", root_path, class: "text-2xl font-bold text-blue-600" %></h1>
-        <nav class="ml-auto">
+        <h1 class="text-2xl font-bold text-blue-600">見習いノート</h1>
             <ul class="flex space-x-6">
                 <% if user_signed_in? %>
                     <li>
