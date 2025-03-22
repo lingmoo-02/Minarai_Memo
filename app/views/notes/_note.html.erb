@@ -1,30 +1,25 @@
-<div class="col-sm-12 col-lg-4 mb-3">
+<div class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
   <div id="note-id-<%= note.id %>">
-    <div class="card">
-        <div class="d-flex justify-content-between align-items-center">
-          <h4 class="card-title mb-0">
-            <%= link_to note.title, note %>
-          </h4>
-          <span class="text-muted">
-            <i class="bi bi-calendar"></i>
-            <%= l note.created_at, format: :short %>
-      <%= image_tag note.note_image_url, class: "card-img-top", width: "300", height:"200" %>
-      <div class="card-body">
-        <div class="d-flex">
-          <div class='ms-auto'>
-            <%= link_to edit_note_path "編集", id: 'button-edit-#{note.id}' do %>
-              <i class="bi bi-pencil-fill"></i>
-            <% end %>
-            <%= link_to '#', id: 'button-delete-#{note.id}', method: :delete, data: {confirm: ''} do %>
-              <i class="bi bi-trash-fill"></i>
-            <% end %>
-          
-          <p class="card-text" style="white-space: pre-wrap; min-height: 5em;">
-          <%= simple_format(note.body) %>
-          </div>
-        </div>
-        <ul class="list-inline">
-        </ul>
+    <%= link_to image_tag note.note_image_url, class: "w-full h-48 object-cover" %>
+    
+  <div class="p-4">
+    <div class="flex justify-between items-center mb-2">
+      <h4 class="text-lg font-bold">
+        <%= link_to note.title, note %>
+      </h4>
+      <span class="text-sm text-gray-500">
+        <i class="bi bi-calendar"></i>
+        <%= l note.created_at, format: :short %>
+      </span>
+    </div>
+
+    <div class="flex justify-end mt-4 space-x-2">
+      <%= link_to edit_note_path(note), class: "text-blue-600 hover:text-blue-800" do %>
+        <i class="bi bi-pencil-fill"></i>
+      <% end %>
+      <%= link_to '#', method: :delete, data: {confirm: ''}, class: "text-red-600 hover:text-red-800" do %>
+        <i class="bi bi-trash-fill"></i>
+      <% end %>
       </div>
     </div>
   </div>
