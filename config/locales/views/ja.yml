@@ -72,18 +72,18 @@ ja:
         note:
           attributes:
             title:
-              blank: ""
+              blank: "タイトルを入力してください"
             body:
-              blank: ""
+              blank: "本文を入力してください"
         user:
           attributes:
             email:
-              blank: "メールアドレスを入力してください"
+              blank: "を入力してください"
             password:
-              blank: "パスワードを入力してください"
-    attributes:
-      user:
-      board:
-        title: タイトル
-        body: 本文
-        note_image: 写真
+              blank: "を入力してください"
+      views:
+        note:
+          attributes:
+            title: タイトル
+            body: 本文
+            note_image: 写真

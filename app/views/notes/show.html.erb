@@ -1,22 +1,26 @@
 <p style="color: green"><%= notice %></p>
 
 <div class="container pt-5">
-    <div class="row mb-3">
-        <div class="col-lg-8 offset-lg-2">
-            <h1><%= t('.title') %></h1>
-            <article class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                          <%= image_tag @note.note_image_url, width: "300", height: "200", class: "card-img-top img-fluid" %>
-                        </div>
-                        <div class="col-md-9">
-                            <h3 style="display: inline;"><%= @note.title %></h3>
-                            
+  <div class="row mb-3">
+    <div class="col-lg-8 offset-lg-2">
+      <h1><%= @note.title %></h1>
+      <article class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <%= image_tag @note.note_image_url, width: "300", height: "200", class: "card-img-top img-fluid" %>
+            </div>
+            <div class="col-md-9">
+              <h3 style="display: inline;"><%= @note.body %></h3>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
 
-<div>
-  <%= link_to "編集する", edit_note_path(@note) %> |
-  <%= link_to "一覧へ戻る", notes_path %>
+  <div>
+    <%= link_to "編集する", edit_note_path(@note) %> |
+    <%= link_to "一覧へ戻る", notes_path %>
 
-  <%= button_to "削除", @note, method: :delete %>
-</div>
+    <%= button_to "削除", @note, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
+  </div>
