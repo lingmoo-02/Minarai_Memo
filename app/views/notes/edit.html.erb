@@ -1,12 +1,3 @@
 <% content_for :title, "Editing note" %>
-
-<h1>編集</h1>
-
 <%= render "form", note: @note %>
 
-<br>
-
-<div>
-  <%= link_to "戻る", @note %> |
-  <%= link_to "一覧に戻る", notes_path %>
-</div>
