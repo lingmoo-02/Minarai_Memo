@@ -1,6 +1,8 @@
 <div class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
   <div id="note-id-<%= note.id %>">
-    <%= link_to image_tag note.note_image_url, class: "w-full h-48 object-cover" %>
+    <%= link_to note_path(note) do %>
+      <%= image_tag note.note_image_url, class: "w-full h-48 object-cover" %>
+    <% end %>
     
   <div class="p-4">
     <div class="flex justify-between items-center mb-2">
