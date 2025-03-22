@@ -1,11 +1,2 @@
 <% content_for :title, "New note" %>
-
-<h1>ノートを作成</h1>
-
 <%= render "form", note: @note %>
-
-<br>
-
-<div>
-  <%= link_to "一覧に戻る", notes_path %>
-</div>

@@ -1,22 +1,41 @@
-<p style="color: green"><%= notice %></p>
+<%# フラッシュメッセージ（成功通知） %>
+<% if notice %>
+  <p class="text-green-600 text-center font-semibold mb-4"><%= notice %></p>
+<% end %>
 
-<div class="container pt-5">
-    <div class="row mb-3">
-        <div class="col-lg-8 offset-lg-2">
-            <h1><%= t('.title') %></h1>
-            <article class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                          <%= image_tag @note.note_image_url, width: "300", height: "200", class: "card-img-top img-fluid" %>
-                        </div>
-                        <div class="col-md-9">
-                            <h3 style="display: inline;"><%= @note.title %></h3>
-                            
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    
+    <!-- タイトルと作成日時 -->
+    <div class="p-4 border-b flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-gray-800"><%= @note.title %></h1>
+      <span class="text-sm text-gray-500">
+        <i class="bi bi-calendar"></i>
+        <%= l @note.created_at, format: :short %>
+      </span>
+    </div>
 
-<div>
-  <%= link_to "編集する", edit_note_path(@note) %> |
-  <%= link_to "一覧へ戻る", notes_path %>
+    <!-- 画像と本文 -->
+    <div class="p-4 flex justify-center">
+      <%= image_tag @note.note_image_url, class: "max-w-xs h-auto rounded shadow" %>
+    </div>
 
-  <%= button_to "削除", @note, method: :delete %>
+    <!-- 本文 -->
+    <div class="px-4 pb-4">
+      <p class="text-gray-700 whitespace-pre-wrap text-base leading-relaxed">
+        <%= simple_format(@note.body) %>
+      </p>
+    </div>
+  </div>
+
+  <!-- 操作ボタン -->
+  <div class="mt-6 flex justify-center space-x-4">
+    <%= link_to "編集する", edit_note_path(@note), class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
+
+    <%= link_to "一覧へ戻る", notes_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
+
+    <%= button_to "削除", @note, method: :delete,
+          data: { confirm: "本当に削除してもよろしいですか？" },
+          class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow" %>
+  </div>
 </div>
