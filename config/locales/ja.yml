@@ -88,5 +88,6 @@ ja:
               blank: "を入力してください"
             email:
               blank: "を入力してください"
+              taken: "はすでに登録されています"
             password:
               blank: "を入力してください"
