@@ -2,14 +2,10 @@
   <h1 class="text-2xl font-bold text-center mb-6">ログイン</h1>
 
   <%= form_with model: resource, url: session_path(resource_name), local: true do |f| %>
-    <% if resource.errors.any? %>
+    <% if flash[:alert] %>
       <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-        <h3 class="font-bold mb-2"><%= resource.errors.count %>件のエラーがあります：</h3>
-        <ul class="list-disc list-inside text-sm">
-          <% resource.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+        <h3 class="font-bold mb-2">エラー：</h3>
+          <p class="text-sm"><%= flash[:alert] %></p>
       </div>
     <% end %>
 
