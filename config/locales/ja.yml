@@ -72,6 +72,7 @@ ja:
         name: 名前
         email: メールアドレス
         password: パスワード
+        password_confirmation: パスワード
     models:
       user: ユーザー
     errors:
@@ -91,3 +92,6 @@ ja:
               taken: "はすでに登録されています"
             password:
               blank: "を入力してください"
+              too_short: "は6文字以上で入力してください"
+            password_confirmation:
+              confirmation: "が一致していません"
