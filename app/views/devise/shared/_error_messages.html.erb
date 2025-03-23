@@ -8,8 +8,10 @@
         %>
       </h2>
       <ul>
-        <% resource.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+        <% resource.errors.each do |attribute, message| %>
+          <li>
+            <%= resource.class.human_attribute_name(attribute) %><%= message %>
+          </li>
         <% end %>
       </ul>
     <% end %>

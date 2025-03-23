@@ -67,6 +67,13 @@ ja:
         one: "1件のエラーが発生し、登録できませんでした。"
         other: "%{count}件のエラーが発生し、登録できませんでした。"
   activerecord:
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+    models:
+      user: ユーザー
     errors:
       models:
         note:
@@ -77,9 +84,9 @@ ja:
               blank: "本文を入力してください"
         user:
           attributes:
+            name:
+              blank: "を入力してください"
             email:
               blank: "を入力してください"
             password:
-              blank: "を入力してください"
-            password_confirmation:
               blank: "を入力してください"
