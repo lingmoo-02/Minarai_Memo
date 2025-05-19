@@ -73,6 +73,9 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード
+      note:
+        title: タイトル
+        body: 本文
     models:
       user: ユーザー
     errors:
@@ -80,9 +83,9 @@ ja:
         note:
           attributes:
             title:
-              blank: "タイトルを入力してください"
+              blank: "を入力してください"
             body:
-              blank: "本文を入力してください"
+              blank: "を入力してください"
         user:
           attributes:
             name:
