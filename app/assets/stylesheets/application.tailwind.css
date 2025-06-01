@@ -8,6 +8,7 @@
   font-weight: bold;
 }
 
+/* レスポンシブ対応 */
 p{
   background-color: black;
   color: white;
