@@ -35,7 +35,7 @@
     <%= link_to "一覧へ戻る", notes_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
 
     <%= button_to "削除", @note, method: :delete,
-          data: { confirm: "本当に削除してもよろしいですか？" },
+          data: { turbo_confirm: "本当に削除してもよろしいですか？" },
           class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow" %>
   </div>
 </div>
