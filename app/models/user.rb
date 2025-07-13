@@ -14,10 +14,19 @@ class User < ApplicationRecord
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
 
   def self.from_omniauth(auth)
+    Rails.logger.debug "AUTH: #{auth.inspect}"
+
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.name = auth.info.name
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
+
+      if user.save
+        user
+      else
+        Rails.logger.debug "User save failed: #{user.errors.full_messages}"
+        nil
+      end
     end
   end
 
