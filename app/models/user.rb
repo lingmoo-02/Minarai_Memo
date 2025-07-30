@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true
 
-  validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
+  validates :uid, presence: true, uniqueness: { scope: :provider }
 
   def self.from_omniauth(auth)
     Rails.logger.debug "AUTH: #{auth.inspect}"
