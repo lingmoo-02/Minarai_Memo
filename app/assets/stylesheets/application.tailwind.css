@@ -14,15 +14,15 @@ p{
 
 @media screen and (max-width: 768px) {
   p{
-      background-color: black;
-        color:green;
+      background-color: white;
+        color:#404040;
     }
 }
 
 @media screen and (max-width: 480px) {
   p{
-      background-color: black;
-        color: red;
+      background-color: white;
+        color: #404040;
     }
 }
 /* ここまでレスポンシブ対応 */
