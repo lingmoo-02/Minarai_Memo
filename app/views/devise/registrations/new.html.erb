@@ -2,8 +2,7 @@
   <h2 class="text-2xl font-bold text-center mb-6">新規登録</h2>
 
   <% if flash[:alert] %>
-    <div class="custom-alert">
-      <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
       <%= flash[:alert] %>
     </div>
   <% end %>
@@ -49,6 +48,9 @@
       <%= f.submit "登録する", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow" %>
     </div>
   <% end %>
+
+  <br>
+  <div class="mb-4 text-center">または</div>
 
   <!-- ログインのリンク -->
   <div class="mt-6 text-center text-sm text-gray-600">
