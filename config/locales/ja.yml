@@ -98,3 +98,8 @@ ja:
               too_short: "は6文字以上で入力してください"
             password_confirmation:
               confirmation: "が一致していません"
+  profile:
+    show:
+      title: プロフィール
+    edit:
+      title: プロフィール編集
