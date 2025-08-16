@@ -1,27 +1,24 @@
-<header class="bg-blue-400 border-y-2">
-    <div class="container mx-auto flex justify-between items-center p-4">
-        <h1 class="text-2xl font-bold text-white">
-            <%= link_to "見習いノート", root_path %></h1>
-            <ul class="flex space-x-6">
-                <% if user_signed_in? %>
-                    <li>
-                        <%= link_to "一覧を表示", notes_path, class: "text-white hover:text-green-600" %>
-                    </li>
-                    <li>
-                        <%= link_to "作成する", new_note_path, class: "text-white hover:text-green-600" %>
-                    </li>
-                    <li>
-                        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-600" %>
-                    </li>
-                <% else %>
-                    <li>
-                        <%= link_to "新規登録", new_user_registration_path, class: "text-gray-700 hover:text-blue-600" %>
-                    </li>
-                    <li>
-                        <%= link_to "ログイン", new_user_session_path, class: "text-gray-700 hover:text-blue-600" %>
-                    </li>
-                <% end %>
-            </ul>
-        </h1>
-    </div>
-</header>
+<div class="bg-blue-400 border-y-2">
+    <nav class="navbar w-full">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <h1 class="text-2xl font-bold text-white"><%= link_to "見習いノート", root_path %></h1>
+            <div class="dropdown dropdown-hover dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <button class="btn btn-ghost btn-circle mr-4">
+                        <%= image_tag "default_avatar.jpg", class: "w-10 h-10" %>
+                    </button>
+                </div>
+                <ul tabindex="0" class="dropdown-content menu bg-slate-50 text-neutral rounded-box z-[1] w-52 p-2 shadow">
+                    <% if user_signed_in? %>
+                        <li><%= link_to current_user.name, profile_path, class: "text-gray-600 font-bold hover:text-blue-600" %></li>
+                        <li><%= link_to "ノートを作成する", new_note_path, class: "text-gray-600 font-bold hover:text-blue-600" %></li>
+                        <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-600 font-bold" %></li>
+                    <% else %>
+                        <li><%= link_to "新規登録", new_user_registration_path, class: "text-gray-700 hover:text-blue-600" %></li>
+                        <li><%= link_to "ログイン", new_user_session_path, class: "text-gray-700  hover:text-blue-600" %></li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    <nav>
+</div>
