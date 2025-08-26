@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
 
-  mount_uploader :user_image, AvatarUploader
+  mount_uploader :avatar, AvatarUploader
 
   def self.from_omniauth(auth)
     Rails.logger.debug "AUTH: #{auth.inspect}"
