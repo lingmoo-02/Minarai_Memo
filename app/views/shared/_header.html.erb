@@ -5,13 +5,13 @@
             <div class="dropdown dropdown-hover dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                     <button class="btn btn-ghost btn-circle mr-4">
-                        <%= image_tag "default_avatar.jpg", class: "w-10 h-10" %>
+                        <%= image_tag "default_avatar.jpg", class: "w-10 h-10 rounded-full object-cover" %>
                     </button>
                 </div>
-                <ul tabindex="0" class="dropdown-content menu bg-slate-50 text-neutral rounded-box z-[1] w-52 p-2 shadow">
+                <ul tabindex="0" class="dropdown-content menu bg-slate-50 text-neutral rounded-box z-[1] w-52 p-2 shadow space-y-4 dark:bg-base-200 dark:text-neutral">
                     <% if user_signed_in? %>
-                        <li><%= link_to current_user.name, profile_path, class: "text-gray-600 font-bold hover:text-blue-600" %></li>
-                        <li><%= link_to "ノートを作成する", new_note_path, class: "text-gray-600 font-bold hover:text-blue-600" %></li>
+                        <li><%= link_to current_user.name, profile_path, class: "text-gray-600 font-bold hover:text-gray-300" %></li>
+                        <li><%= link_to "ノートを作成する", new_note_path, class: "text-gray-600 font-bold hover:text-gray-300" %></li>
                         <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-600 font-bold" %></li>
                     <% else %>
                         <li><%= link_to "新規登録", new_user_registration_path, class: "text-gray-700 hover:text-blue-600" %></li>

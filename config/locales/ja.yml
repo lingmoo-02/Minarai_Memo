@@ -73,6 +73,7 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード
+        avatar: アバター
       note:
         title: タイトル
         body: 本文
