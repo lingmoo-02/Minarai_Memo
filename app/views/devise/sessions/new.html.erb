@@ -5,7 +5,7 @@
     <% if flash[:alert] %>
       <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
         <h3 class="font-bold mb-2">エラー：</h3>
-          <p class="text-sm"><%= flash[:alert] %></p>
+        <p class="text-sm"><%= flash[:alert] %></p>
       </div>
     <% end %>
 
@@ -24,21 +24,34 @@
     </div>
 
     <!-- ログイン状態保持 -->
-    <% if devise_mapping.rememberable? %>
-      <div class="mb-4 flex items-center">
-        <%= f.check_box :remember_me, id: "remember_me", class: "mr-2" %>
-        <%= f.label :remember_me, "ログイン状態を保持する", class: "text-sm text-gray-700" %>
-      </div>
-    <% end %>
+    <div class="flex items-center justify-between mb-6">
+      <% if devise_mapping.rememberable? %>
+        <div class="justify-items-end flex items-center">
+          <%= f.check_box :remember_me, id: "remember_me", class: "mr-2" %>
+          <%= f.label :remember_me, "ログイン状態を保持する", class: "text-sm text-gray-700" %>
+        </div>
+      <% end %>
+
+      <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <%= link_to "パスワードを忘れた場合はこちら", new_password_path(resource_name), class: "justify-items-end text-sm text-gray-700" %>
+      <% end %>
+    </div>
 
     <!-- ログインボタン -->
-    <div class="text-center">
+    <div class="text-center mb-6">
       <%= f.submit "ログイン", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow" %>
     </div>
+
+    <div class="divider text-xs">または</div>
+
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+      <%= link_to "アカウントを作成", new_registration_path(resource_name) %><br />
+    <% end %>
   <% end %>
 
-  <!-- Deviseのリンク（パスワード再発行など） -->
-  <div class="mt-6 text-center text-sm text-gray-600">
-    <%= render "devise/shared/links" %>
-  </div>
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+    <% end %>
+  <% end %>
 </div>
