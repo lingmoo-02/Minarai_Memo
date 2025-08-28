@@ -1,24 +1,28 @@
-<div class="bg-blue-400 border-y-2">
-    <nav class="navbar w-full">
-        <div class="container mx-auto flex justify-between items-center p-4">
-            <h1 class="text-2xl font-bold text-white"><%= link_to "見習いノート", root_path %></h1>
-            <div class="dropdown dropdown-hover dropdown-end">
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                    <button class="btn btn-ghost btn-circle mr-4">
-                        <%= image_tag "default_avatar.jpg", class: "w-10 h-10 rounded-full object-cover" %>
-                    </button>
-                </div>
-                <ul tabindex="0" class="dropdown-content menu bg-slate-50 text-neutral rounded-box z-[1] w-52 p-2 shadow space-y-4 dark:bg-base-200 dark:text-neutral">
-                    <% if user_signed_in? %>
-                        <li><%= link_to current_user.name, profile_path, class: "text-gray-600 font-bold hover:text-gray-300" %></li>
-                        <li><%= link_to "ノートを作成する", new_note_path, class: "text-gray-600 font-bold hover:text-gray-300" %></li>
-                        <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-600 font-bold" %></li>
-                    <% else %>
-                        <li><%= link_to "新規登録", new_user_registration_path, class: "text-gray-700 hover:text-blue-600" %></li>
-                        <li><%= link_to "ログイン", new_user_session_path, class: "text-gray-700  hover:text-blue-600" %></li>
-                    <% end %>
-                </ul>
-            </div>
+<div class="bg-blue-400 border-y-2" data-controller="dropdown">
+  <nav class="navbar w-full">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold text-white"><%= link_to "見習いノート", root_path %></h1>
+      
+      <div class="relative">
+        <!-- トリガー -->
+        <button class="w-10 h-10 rounded-full object-cover" data-action="click->dropdown#toggle">
+          <%= image_tag "default_avatar.jpg" %>
+        </button>
+
+        <!-- ドロップダウンメニュー -->
+        <div data-dropdown-target="menu" class="hidden absolute right-4 mt-2 w-48 text-center bg-white rounded-md shadow-lg z-50">
+          <ul>
+          <% if user_signed_in? %>
+              <li><%= link_to current_user.name, profile_path, class: "text-gray-600 font-bold hover:text-gray-400" %></li>
+              <li><%= link_to "ノートを作成する", new_note_path, class: "text-gray-600 font-bold hover:text-gray-400" %></li>
+              <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-600 font-bold" %></li>
+          <% else %>
+              <li><%= link_to "新規登録", new_user_registration_path, class: "text-gray-700 hover:text-gray-400" %></li>
+              <li><%= link_to "ログイン", new_user_session_path, class: "text-blue-600 font-bold hover:text-blue-600" %></li>
+          <% end %>
+          </ul>
         </div>
-    <nav>
+      </div>
+    </div>
+  </nav>
 </div>
