@@ -69,16 +69,16 @@ ja:
   activerecord:
     attributes:
       user:
-        name: 名前
-        email: メールアドレス
-        password: パスワード
-        password_confirmation: パスワード
-        avatar: アバター
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード"
+        avatar: "アバター"
       note:
-        title: タイトル
-        body: 本文
+        title: "タイトル"
+        body: "本文"
     models:
-      user: ユーザー
+      user: "ユーザー"
     errors:
       models:
         note:
@@ -101,6 +101,11 @@ ja:
               confirmation: "が一致していません"
   profile:
     show:
-      title: プロフィール
+      title: "プロフィール"
     edit:
-      title: プロフィール編集
+      title: "プロフィール編集"
+  views:
+    pagination:
+      previous: "前へ"
+      next: "次へ"
+    
