@@ -9,7 +9,6 @@
       </div>
     <% end %>
 
-    <!-- メールアドレス -->
     <div class="mb-4">
       <%= f.label :email, "メールアドレス", class: "block text-gray-700 font-semibold mb-1" %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email",
@@ -44,8 +43,12 @@
 
     <div class="divider text-xs">または</div>
 
-    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-      <%= link_to "アカウントを作成", new_registration_path(resource_name) %><br />
+    <%- if devise_mapping.registerable? && controller_name != 'registrations'  %>
+      <%= link_to new_registration_path(resource_name), class: "relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-primary rounded-lg group bg-gradient-to-tl from-primary to-cyan-500 hover:bg-base200 hover:text-primary dark:text-neutral w-full" do %>
+        <span class="relative flex items-center justify-center w-full py-2.5 transition-all ease-in duration-75 bg-white dark:bg-base-200 rounded-md group-hover:bg-base-200 dark:group-hover:bg-base-300">
+          <span class="whitespace-nowrap">アカウントを作成</span>
+        </span>
+      <% end %>
     <% end %>
   <% end %>
 
