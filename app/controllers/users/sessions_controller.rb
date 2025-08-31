@@ -29,7 +29,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # サインイン後のリダイレクト先を指定する
   def after_sign_in_path_for(resource)
-    notes_path
+    profile_path
   end
 
   # サインアウト後のリダイレクト先を指定する
