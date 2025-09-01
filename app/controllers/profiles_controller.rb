@@ -12,7 +12,10 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @notes = current_user.notes
+    @notes_count_by_day = @notes.group_by_day(:created_at, last:14).count
+  end
 
   private
 
