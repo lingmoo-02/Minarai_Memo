@@ -12,7 +12,29 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @notes = current_user.notes
+
+    # 日ごとの累計
+    daily = @notes.group_by_day(:created_at, last: 10).count
+    sum = 0
+    @notes_daily = daily.transform_values { |count| sum += count }
+    
+    # 週ごとの累計
+    weekly = @notes.group_by_week(:created_at, last: 20).count
+    sum = 0
+    @notes_weekly = weekly.transform_values { |count| sum += count }
+
+    # 月ごとの累計
+    monthly = @notes.group_by_month(:created_at, last: 20).count
+    sum = 0
+    @notes_monthly = monthly.transform_values { |count| sum += count }
+
+    # 年ごとの累計
+    yearly = @notes.group_by_year(:created_at, last: 20).count
+    sum = 0
+    @notes_yearly = yearly.transform_values { |count| sum += count }
+  end
 
   private
 
