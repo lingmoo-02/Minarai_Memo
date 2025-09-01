@@ -34,15 +34,32 @@
     </div>
 
     <!-- 右カラム: グラフエリア -->
-    <div class="card bg-white shadow-xl rounded-2xl p-8 animate-fade-in">
-      <h2 class="text-xl font-bold text-blue-700 mb-6">ノート作成の推移</h2>
-      <!-- グラフを表示するdiv -->
-      <canvas 
-       data-controller="notes-chart"
-       data-labels="<% @notes_count_by_day.keys.to_json %>"
-       data-data="<% @notes_count_by_day.values.to_json %>"
-       class="w-full h-64">
-      </canvas>
+    <div class="card bg-white shadow-xl rounded-2xl p-8" data-controller="notes-chart">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-blue-700">ノート作成の推移</h2>
+        <div class="tabs tabs-bordered">
+          <a class="tab tab-active" data-action="click->notes-chart#switch" data-range="day">日</a>
+          <a class="tab" data-action="click->notes-chart#switch" data-range="week">週</a>
+          <a class="tab" data-action="click->notes-chart#switch" data-range="month">月</a>
+          <a class="tab" data-action="click->notes-chart#switch" data-range="year">年</a>
+        </div>
+      </div>
+
+      <%= tag.canvas(
+        nil,
+        data: { 
+          controller: "notes-chart",
+          daily_labels:   @notes_daily.keys.map   { |d| d.strftime('%m/%d') },
+          daily_data:     @notes_daily.values,
+          weekly_labels:  @notes_weekly.keys.map  { |d| d.strftime('%m/%d') },
+          weekly_data:    @notes_weekly.values,
+          monthly_labels: @notes_monthly.keys.map { |d| d.strftime('%Y/%m') },
+          monthly_data:   @notes_monthly.values,
+          yearly_labels:  @notes_yearly.keys.map  { |d| d.strftime('%Y') },
+          yearly_data:    @notes_yearly.values
+          },
+        class: "w-full h-64"
+      ) %>
     </div>
   </div>
 </div>
