@@ -1,8 +1,6 @@
 class NoteImageUploader < CarrierWave::Uploader::Base
-  # Include RMagick, MiniMagick, or Vips support:
-  # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  # include CarrierWave::Vips
+
 
   # Choose what kind of storage to use for this uploader:
   if Rails.env.production?
@@ -28,16 +26,16 @@ class NoteImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  process resize_to_fit: [200, 300]
+  process resize_to_limit: [300, 200]
   #
   # def scale(width, height)
   #   # do something
   # end
 
   # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process resize_to_fit: [50, 50]
-  # end
+  version :thumb do
+    process resize_to_fit: [50, 50]
+  end
 
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -47,7 +45,13 @@ class NoteImageUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg"
-  # end
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
+
+  private
+
+  def secure_token
+    @secure_token ||= SecureRandom.uuid
+  end
 end
