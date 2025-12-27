@@ -38,7 +38,7 @@ gem "bootsnap", require: false
 
 gem 'devise'
 
-gem 'carrierwave', '~> 3.0'
+gem 'carrierwave', '~> 3.1'
 
 gem 'fog-aws'
 
