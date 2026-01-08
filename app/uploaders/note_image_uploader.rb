@@ -26,14 +26,14 @@ class NoteImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  process resize_to_limit: [800, 800]
-  process convert_to_webp: []
+  # process resize_to_limit: [800, 800]
+  # process convert_to_webp: []
 
   # Create different versions of your uploaded files:
-  version :thumb do
-    process resize_to_fill: [300, 200]
-    process convert_to_webp: []
-  end
+  # version :thumb do
+  #   process resize_to_fill: [300, 200]
+  #   process convert_to_webp: []
+  # end
 
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -44,7 +44,7 @@ class NoteImageUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "#{secure_token}.webp" if original_filename.present?
+    "#{secure_token}.webp"
   end
 
   private
