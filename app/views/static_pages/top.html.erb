@@ -1,15 +1,25 @@
-<html>
-  <body class="top-wrapper">
-    <% if flash[:notice] %>
-      <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded"><%= notice %></div>
-    <% end %>
-    <main class="container mx-auto mt-10 text-center">
-      <h2 class="text-4xl font-bold text-gray-800">
-        見て覚える、を<br>新しい形で。
-      </h2>
-      <br>
-      <p class="text-sm text-gray-800 mb-5 text-center">
-        ログインしてノートを作成してみましょう。
-      </p>
-  </body>
-</html>
+<% if flash[:notice] %>
+  <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded"><%= notice %></div>
+<% end %>
+
+<main class="container mx-auto mt-10 px-4">
+  <div class="max-w-2xl mx-auto text-center">
+    <!-- キャッチコピー -->
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+      見て覚える、を<br>新しい形で。
+    </h2>
+
+    <!-- サブテキスト -->
+    <p class="text-lg text-gray-600 mb-12">
+      写真とメモで学びを記録し、技術を身につけよう
+    </p>
+
+    <!-- アクションボタン -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
+      <%= link_to "新規登録", new_user_registration_path,
+          class: "w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition transform hover:scale-105" %>
+      <%= link_to "ログイン", new_user_session_path,
+          class: "w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition transform hover:scale-105" %>
+    </div>
+  </div>
+</main>
