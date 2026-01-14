@@ -1,7 +1,11 @@
 <div class="bg-blue-400 border-y-2" data-controller="dropdown">
   <nav class="navbar w-full">
     <div class="container mx-auto flex justify-between items-center p-4">
-      <h1 class="text-2xl font-bold text-white">見習いノート</h1>
+      <% if user_signed_in? %>
+        <%= link_to "見習いノート", notes_path, class: "text-2xl font-bold text-white hover:text-blue-100 transition" %>
+      <% else %>
+        <h1 class="text-2xl font-bold text-white">見習いノート</h1>
+      <% end %>
 
       <% if user_signed_in? %>
         <div class="relative">
