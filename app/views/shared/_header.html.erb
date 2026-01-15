@@ -1,6 +1,6 @@
 <div class="fixed top-0 left-0 right-0 z-50 lg:relative bg-green-200 border-y-2" data-controller="dropdown">
   <nav class="navbar w-full">
-    <div class="container mx-auto flex justify-between items-center p-4">
+    <div class="container mx-auto flex justify-between items-center py-3 px-4">
       <% if user_signed_in? %>
         <%= link_to "見習いノート", notes_path, class: "text-2xl font-bold text-gray-700 hover:text-gray-900 transition" %>
       <% else %>
@@ -8,22 +8,15 @@
       <% end %>
 
       <% if user_signed_in? %>
-        <div class="relative">
-          <div class="flex items-center space-x-4">
-            <span class="hidden lg:inline text-gray-700 font-bold"><%= link_to "ノートを作成", new_note_path %></span>
-            <!-- トリガー -->
-            <button data-action="click->dropdown#toggle">
-              <%= image_tag "default_avatar.jpg", class: "w-12 h-12 rounded-full" %>
-            </button>
-
-            <!-- ドロップダウンメニュー -->
-            <div data-dropdown-target="menu" class="hidden absolute right-4 top-12 mt-4 w-48 text-center bg-white rounded-md shadow-lg">
-              <ul>
-                <li><%= link_to current_user.name, profile_path, class: "text-gray-600 font-bold hover:text-gray-400" %></li>
-                <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-600 font-bold" %></li>
-              </ul>
-            </div>
-          </div>
+        <div class="flex items-center space-x-4">
+          <span class="hidden lg:inline text-gray-700 font-bold"><%= link_to "ノートを作成", new_note_path %></span>
+          <!-- ログアウトアイコン -->
+          <%= link_to destroy_user_session_path,
+            method: :delete,
+            class: "flex items-center justify-center min-w-[44px] min-h-[44px] text-gray-700 hover:text-gray-900 transition focus:outline-none focus:ring-2 focus:ring-green-500 rounded-lg",
+            aria: { label: "ログアウト" } do %>
+            <i class="fa-solid fa-sign-out-alt text-xl"></i>
+          <% end %>
         </div>
       <% end %>
     </div>
