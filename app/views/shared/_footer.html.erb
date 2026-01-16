@@ -1,34 +1,44 @@
 <% if user_signed_in? %>
   <nav class="fixed bottom-0 left-0 right-0 z-40 bg-green-200 border-t-2 border-green-300 shadow-lg" role="navigation" aria-label="フッターナビゲーション">
     <div class="container mx-auto">
-      <div class="flex justify-around items-center py-3">
+      <div class="flex justify-between items-center py-0.5 relative">
 
-        <!-- マイページボタン -->
+        <!-- 左サイド: マイページボタン -->
         <%= link_to profile_path,
-          class: "flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-4 py-2 rounded-lg transition-all duration-200 hover:bg-green-300 active:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 #{current_page?(profile_path) ? 'bg-green-300' : ''}",
+          class: "flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-2 py-2 rounded-lg transition-all duration-200 hover:bg-green-300 active:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 #{current_page?(profile_path) ? 'bg-green-300' : ''}",
           aria: { label: "マイページ", current: current_page?(profile_path) } do %>
           <i class="fa-solid fa-user text-xl text-gray-700 mb-1"></i>
           <span class="text-xs font-medium text-gray-700">マイページ</span>
         <% end %>
 
-        <!-- チームボタン（未実装・無効化） -->
-        <button
-          disabled
-          class="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-4 py-2 rounded-lg opacity-40 cursor-not-allowed"
-          aria-label="チーム（準備中）"
-          aria-disabled="true"
-        >
-          <i class="fa-solid fa-users text-xl text-gray-500 mb-1"></i>
-          <span class="text-xs font-medium text-gray-500">チーム</span>
-        </button>
-
-        <!-- 検索ボタン（ノート一覧へ遷移） -->
-        <%= link_to notes_path,
-          class: "flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-4 py-2 rounded-lg transition-all duration-200 hover:bg-green-300 active:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 #{current_page?(notes_path) ? 'bg-green-300' : ''}",
-          aria: { label: "ノート検索", current: current_page?(notes_path) } do %>
-          <i class="fa-solid fa-magnifying-glass text-xl text-gray-700 mb-1"></i>
-          <span class="text-xs font-medium text-gray-700">検索</span>
+        <!-- 中央: ノート作成FABボタン -->
+        <%= link_to new_note_path,
+          class: "absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white rounded-full shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2",
+          aria: { label: "ノートを作成" } do %>
+          <i class="fa-solid fa-plus text-2xl"></i>
         <% end %>
+
+        <!-- 右サイド: チーム・検索ボタン -->
+        <div class="flex items-center">
+          <!-- チームボタン（未実装・無効化） -->
+          <button
+            disabled
+            class="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-2 py-2 rounded-lg opacity-40 cursor-not-allowed"
+            aria-label="チーム（準備中）"
+            aria-disabled="true"
+          >
+            <i class="fa-solid fa-users text-xl text-gray-500 mb-1"></i>
+            <span class="text-xs font-medium text-gray-500">チーム</span>
+          </button>
+
+          <!-- 検索ボタン（ノート一覧へ遷移） -->
+          <%= link_to notes_path,
+            class: "flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-2 py-2 rounded-lg transition-all duration-200 hover:bg-green-300 active:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 #{current_page?(notes_path) ? 'bg-green-300' : ''}",
+            aria: { label: "ノート検索", current: current_page?(notes_path) } do %>
+            <i class="fa-solid fa-magnifying-glass text-xl text-gray-700 mb-1"></i>
+            <span class="text-xs font-medium text-gray-700">検索</span>
+          <% end %>
+        </div>
 
       </div>
     </div>
