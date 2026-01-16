@@ -102,6 +102,12 @@ ja:
   profile:
     show:
       title: "プロフィール"
+      recent_notes: "最近のノート"
+      no_notes_yet: "まだノートが作成されていません"
+      view_all_notes: "すべてのノートを見る"
+      experience_duration: "経験年数"
+      total_notes: "総ノート数"
+      registration_date: "登録日"
     edit:
       title: "プロフィール編集"
   views:

@@ -9,6 +9,3 @@ application.register("dropdown", DropdownController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
-
-import NotesChartController from "./notes_chart_controller"
-application.register("notes-chart", NotesChartController)
