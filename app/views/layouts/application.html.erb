@@ -15,14 +15,6 @@
 
   </head>
   <body class="pt-20 lg:pt-0 pb-20">
-    <!-- フローティングアクションボタン（フッターの直上、モバイルのみ） -->
-    <% if user_signed_in? %>
-      <%= link_to new_note_path,
-          class: "lg:hidden fixed bottom-24 right-6 z-40 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition" do %>
-        <i class="fa-solid fa-plus text-2xl"></i>
-      <% end %>
-    <% end %>
-
     <%= render 'shared/header' %>
     <%= yield %>
     <%= render 'shared/footer' %>
