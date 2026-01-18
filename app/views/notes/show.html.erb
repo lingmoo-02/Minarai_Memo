@@ -13,6 +13,14 @@
         <%= l @note.created_at, format: :short %>
       </span>
     </div>
+    <!-- タグ表示 -->
+    <% if @note.tag.present? %>
+      <div class="p-4 border-b">
+        <span class="inline-block bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded">
+          <%= @note.tag.name %>
+        </span>
+      </div>
+    <% end %>
     <!-- 画像と本文 -->
     <div class="p-4 flex justify-center">
       <%= image_tag @note.note_image_url, class: "max-w-xs h-auto rounded shadow" %>
