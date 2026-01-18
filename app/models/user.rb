@@ -6,7 +6,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
   
   has_many :notes, dependent: :destroy
-  
+
+  scope :admin, -> { where(admin: true) }
+
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true
@@ -33,6 +35,10 @@ class User < ApplicationRecord
 
   def self.create_unique_string
     SecureRandom.uuid
+  end
+
+  def admin?
+    admin
   end
 
 end

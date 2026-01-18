@@ -17,14 +17,10 @@
             <%= l note.created_at, format: :short %>
           </div>
 
-          <% if note.tags.present? %>
-            <div class="flex flex-wrap gap-1">
-              <% note.tags.each do |tag| %>
-                <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">
-                  <%= tag.name %>
-                </span>
-              <% end %>
-            </div>
+          <% if note.tag.present? %>
+            <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">
+              <%= note.tag.name %>
+            </span>
           <% end %>
         </div>
       </div>
@@ -49,13 +45,11 @@
           </span>
         </div>
 
-        <% if note.tags.present? %>
-          <div class="flex flex-wrap gap-1 mb-2">
-            <% note.tags.each do |tag| %>
-              <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">
-                <%= tag.name %>
-              </span>
-            <% end %>
+        <% if note.tag.present? %>
+          <div class="mb-2">
+            <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">
+              <%= note.tag.name %>
+            </span>
           </div>
         <% end %>
       </div>

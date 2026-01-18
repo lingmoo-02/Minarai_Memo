@@ -34,6 +34,14 @@
       <%= form.hidden_field :note_image_cache %>
     </div>
 
+    <!-- タグ選択 -->
+    <div class="mb-4">
+      <%= form.label :tag_id, "タグ", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.collection_select :tag_id, Tag.order(:name), :id, :name,
+          { prompt: "タグを選択（任意）" },
+          { class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" } %>
+    </div>
+
     <!-- 送信ボタン -->
     <div class="text-center">
       <%= form.submit note.persisted? ? "更新する" : "ノートを作成", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>

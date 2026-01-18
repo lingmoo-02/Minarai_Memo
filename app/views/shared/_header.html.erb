@@ -10,6 +10,9 @@
       <% if user_signed_in? %>
         <div class="flex items-center space-x-4">
           <span class="hidden lg:inline text-gray-700 font-bold"><%= link_to "ノートを作成", new_note_path %></span>
+          <% if current_user&.admin? %>
+            <span class="hidden lg:inline text-gray-700 font-bold"><%= link_to "タグ管理", admin_tags_path %></span>
+          <% end %>
           <!-- ログアウトアイコン -->
           <%= link_to destroy_user_session_path,
             method: :delete,

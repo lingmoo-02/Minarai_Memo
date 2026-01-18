@@ -77,8 +77,12 @@ ja:
       note:
         title: "タイトル"
         body: "本文"
+        tag_id: "タグ"
+      tag:
+        name: "タグ名"
     models:
       user: "ユーザー"
+      tag: "タグ"
     errors:
       models:
         note:
@@ -99,6 +103,11 @@ ja:
               too_short: "は6文字以上で入力してください"
             password_confirmation:
               confirmation: "が一致していません"
+        tag:
+          attributes:
+            name:
+              blank: "を入力してください"
+              taken: "はすでに使用されています"
   profile:
     show:
       title: "プロフィール"
