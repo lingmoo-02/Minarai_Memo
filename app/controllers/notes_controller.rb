@@ -1,5 +1,6 @@
 class NotesController < ApplicationController
   before_action :set_note, only: %i[ show edit update destroy ]
+  before_action :check_note_ownership, only: %i[ show edit update destroy ]
 
   # GET /notes or /notes.json
   def index
@@ -63,8 +64,13 @@ class NotesController < ApplicationController
       @note = Note.find(params[:id])
     end
 
+    # Check if the current user owns the note
+    def check_note_ownership
+      redirect_to notes_path, alert: "このノートへのアクセス権限がありません" unless @note.user_id == current_user.id
+    end
+
     # Only allow a list of trusted parameters through.
     def note_params
-      params.require(:note).permit(:title, :body, :note_image, :note_image_cache, :tag_id)
+      params.require(:note).permit(:title, :body, :note_image, :note_image_cache, :tag_id, :team_id)
     end
 end

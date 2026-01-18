@@ -8,10 +8,6 @@ Rails.application.routes.draw do
   root 'static_pages#top'
   resources :notes
   resource :profile, only: %i[show edit update]
-
-  namespace :admin do
-    resources :tags
-  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
