@@ -4,10 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
-  
-  has_many :notes, dependent: :destroy
 
-  scope :admin, -> { where(admin: true) }
+  has_many :notes, dependent: :destroy
+  has_many :teams, foreign_key: 'owner_id', dependent: :destroy
+  has_many :team_memberships, dependent: :destroy
+  has_many :joined_teams, through: :team_memberships, source: :team
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, uniqueness: true
@@ -37,8 +38,21 @@ class User < ApplicationRecord
     SecureRandom.uuid
   end
 
-  def admin?
-    admin
+  # Team permission checks
+  def can_manage_team?(team)
+    team.owner_id == id || team_memberships.exists?(team: team, role: [:master, :owner])
+  end
+
+  def can_create_tags?(team)
+    team.owner_id == id || team_memberships.exists?(team: team, role: [:master, :owner])
+  end
+
+  def can_edit_note?(note)
+    note.user_id == id || (note.team && can_view_team_notes?(note.team))
+  end
+
+  def can_view_team_notes?(team)
+    team_memberships.exists?(team: team)
   end
 
 end
