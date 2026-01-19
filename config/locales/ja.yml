@@ -150,4 +150,32 @@ ja:
     pagination:
       previous: "前へ"
       next: "次へ"
-    
+    teams:
+      index:
+        title: "チーム一覧"
+        create_new: "新しいチームを作成"
+      show:
+        title: "チーム詳細"
+        members: "メンバー管理"
+        notes: "チームノート"
+        tags: "タグ管理"
+      new:
+        title: "新しいチームを作成する"
+      edit:
+        title: "チームを編集する"
+    team_memberships:
+      index:
+        title: "メンバー管理"
+        invite: "新しいメンバーを招待"
+      new:
+        title: "新しいメンバーを招待"
+    team_notes:
+      index:
+        title: "チームノート"
+    team_tags:
+      index:
+        title: "タグ管理"
+      new:
+        title: "新しいタグを作成"
+      edit:
+        title: "タグを編集"
