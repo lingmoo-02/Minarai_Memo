@@ -1,5 +1,7 @@
 class Tag < ApplicationRecord
-  validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
-
+  belongs_to :team, optional: true
   has_many :notes, dependent: :nullify
+
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, uniqueness: { scope: :team_id }
 end

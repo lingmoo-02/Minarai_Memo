@@ -1,0 +1,102 @@
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">メンバー管理</h1>
+    <p class="text-gray-600"><strong><%= @team.name %></strong> のメンバー</p>
+  </div>
+
+  <!-- メンバー一覧 -->
+  <div class="bg-white rounded-lg shadow p-6 mb-8">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">メンバー一覧</h2>
+
+    <% if @memberships.any? %>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="px-6 py-3 text-left font-semibold text-gray-700">名前</th>
+              <th class="px-6 py-3 text-left font-semibold text-gray-700">メールアドレス</th>
+              <th class="px-6 py-3 text-center font-semibold text-gray-700">役割</th>
+              <th class="px-6 py-3 text-left font-semibold text-gray-700">参加日</th>
+              <th class="px-6 py-3 text-center font-semibold text-gray-700">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @memberships.each do |membership| %>
+              <tr class="border-b hover:bg-gray-50 transition">
+                <td class="px-6 py-4 font-semibold text-gray-800">
+                  <%= membership.user.name %>
+                </td>
+                <td class="px-6 py-4 text-gray-600">
+                  <%= membership.user.email %>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <% if current_user.can_manage_team?(@team) && membership.user_id != current_user.id %>
+                    <%= form_with(model: [@team, membership], local: true, method: :patch) do |form| %>
+                      <%= form.select :role, options_for_select(TeamMembership.roles.keys.map { |r| [I18n.t("enums.team_membership.role.#{r}"), r] }, membership.role), {}, class: "border rounded px-2 py-1" %>
+                      <%= form.submit "更新", class: "bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm" %>
+                    <% end %>
+                  <% else %>
+                    <span class="inline-block bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded">
+                      <%= I18n.t("enums.team_membership.role.#{membership.role}") %>
+                    </span>
+                  <% end %>
+                </td>
+                <td class="px-6 py-4 text-gray-600">
+                  <%= l membership.created_at, format: :short %>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <% if current_user.can_manage_team?(@team) && membership.user_id != current_user.id %>
+                    <%= link_to "削除", team_membership_path(@team, membership), method: :delete, data: { turbo_confirm: "本当に削除してもよろしいですか？" }, class: "text-red-500 hover:text-red-600 font-semibold" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-gray-600">メンバーがいません</p>
+    <% end %>
+  </div>
+
+  <!-- メンバー招待フォーム -->
+  <% if current_user.can_manage_team?(@team) %>
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">新しいメンバーを招待</h2>
+
+      <%= form_with(model: [@team, TeamMembership.new], local: true) do |form| %>
+        <% if form.object.errors.any? %>
+          <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            <h3 class="font-bold mb-2"><%= form.object.errors.count %> 件のエラーがあります：</h3>
+            <ul class="list-disc list-inside text-sm">
+              <% form.object.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <!-- メールアドレス -->
+          <div>
+            <%= form.label :email, "メールアドレス", class: "block text-gray-700 font-semibold mb-1" %>
+            <%= form.email_field :email, class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300", placeholder: "user@example.com" %>
+          </div>
+
+          <!-- 役割選択 -->
+          <div>
+            <%= form.label :role, "役割", class: "block text-gray-700 font-semibold mb-1" %>
+            <%= form.select :role, options_for_select(TeamMembership.roles.keys.map { |r| [I18n.t("enums.team_membership.role.#{r}"), r] }, "apprentice"), {}, class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" %>
+          </div>
+
+          <!-- 招待ボタン -->
+          <div class="flex items-end">
+            <%= form.submit "招待", class: "w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= link_to "チーム詳細へ戻る", team_path(@team), class: "block text-center mt-6 text-blue-500 hover:text-blue-600" %>
+</div>
