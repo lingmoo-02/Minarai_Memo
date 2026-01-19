@@ -6,8 +6,19 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   root 'static_pages#top'
+
+  # Personal notes
   resources :notes
+
+  # Profile
   resource :profile, only: %i[show edit update]
+
+  # Teams
+  resources :teams do
+    resources :memberships, controller: 'team_memberships'
+    resources :notes, controller: 'team_notes', only: [:index, :show]
+    resources :tags, controller: 'team_tags'
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -80,9 +80,17 @@ ja:
         tag_id: "タグ"
       tag:
         name: "タグ名"
+      team:
+        name: "チーム名"
+        description: "説明"
+      team_membership:
+        role: "役割"
+        email: "メールアドレス"
     models:
       user: "ユーザー"
       tag: "タグ"
+      team: "チーム"
+      team_membership: "チームメンバー"
     errors:
       models:
         note:
@@ -108,6 +116,25 @@ ja:
             name:
               blank: "を入力してください"
               taken: "はすでに使用されています"
+        team:
+          attributes:
+            name:
+              blank: "を入力してください"
+              taken: "はすでに登録されています"
+            description:
+              blank: "を入力してください"
+        team_membership:
+          attributes:
+            role:
+              blank: "を選択してください"
+            email:
+              blank: "を入力してください"
+  enums:
+    team_membership:
+      role:
+        apprentice: "見習い"
+        master: "師匠"
+        owner: "チーム管理者"
   profile:
     show:
       title: "プロフィール"
