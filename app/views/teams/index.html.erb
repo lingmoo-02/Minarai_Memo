@@ -1,45 +1,87 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-8">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
     <h1 class="text-3xl font-bold text-gray-800">チーム一覧</h1>
-    <%= link_to "新しいチームを作成", new_team_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow" %>
+    <%= link_to "新しいチームを作成", new_team_path, class: "w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow text-center" %>
   </div>
 
   <% if @teams.any? %>
-    <div class="overflow-x-auto shadow-md rounded-lg">
-      <table class="w-full border-collapse bg-white">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="px-6 py-3 text-left font-semibold text-gray-700">チーム名</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-700">説明</th>
-            <th class="px-6 py-3 text-center font-semibold text-gray-700">メンバー数</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-700">作成日</th>
-            <th class="px-6 py-3 text-center font-semibold text-gray-700">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @teams.each do |team| %>
-            <tr class="border-b hover:bg-gray-50 transition">
-              <td class="px-6 py-4">
-                <%= link_to team.name, team_path(team), class: "text-blue-500 hover:text-blue-600 font-semibold" %>
-              </td>
-              <td class="px-6 py-4 text-gray-600 truncate">
-                <%= team.description&.truncate(30) || "（説明なし）" %>
-              </td>
-              <td class="px-6 py-4 text-center text-gray-600">
-                <%= team.team_memberships.count %>
-              </td>
-              <td class="px-6 py-4 text-gray-600">
-                <%= l team.created_at, format: :short %>
-              </td>
-              <td class="px-6 py-4 text-center space-x-2">
-                <%= link_to "詳細", team_path(team), class: "text-blue-500 hover:text-blue-600 font-semibold" %>
-                <%= link_to "編集", edit_team_path(team), class: "text-yellow-500 hover:text-yellow-600 font-semibold" %>
-                <%= link_to "削除", team_path(team), method: :delete, data: { turbo_confirm: "本当に削除してもよろしいですか？" }, class: "text-red-500 hover:text-red-600 font-semibold" %>
-              </td>
-            </tr>
+    <!-- スマートフォン版 -->
+    <div class="sm:hidden space-y-2">
+      <% @teams.each do |team| %>
+        <div class="bg-white border border-gray-200 p-3 rounded flex items-center justify-between">
+          <!-- チーム名 -->
+          <div class="flex-1 min-w-0">
+            <%= link_to team.name, team_path(team), class: "text-base font-semibold text-blue-500 hover:text-blue-600 truncate block" %>
+          </div>
+
+          <!-- 最終更新 -->
+          <div class="flex-shrink-0 text-xs text-gray-500 ml-2">
+            <% if team.updated_at.to_date == Date.today %>
+              <%= team.updated_at.strftime("%H:%M") %>
+            <% else %>
+              <%= team.updated_at.strftime("%-m月%-d日") %>
+            <% end %>
+          </div>
+
+          <!-- アクション（管理者ロールのみ） -->
+          <% if team.owner_id == current_user.id %>
+            <div class="flex gap-2 flex-shrink-0 ml-2">
+              <%= link_to edit_team_path(team), class: "text-gray-600 hover:text-yellow-500 text-sm", title: "編集" do %>
+                <i class="fas fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to team_path(team), data: { turbo_method: :delete, turbo_confirm: "本当に削除してもよろしいですか？" }, class: "text-gray-600 hover:text-red-500 text-sm", title: "削除" do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            </div>
           <% end %>
-        </tbody>
-      </table>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- デスクトップ版 -->
+    <div class="hidden sm:block">
+      <div class="space-y-4">
+        <% @teams.each do |team| %>
+          <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <!-- チーム名 + ロールバッジ -->
+              <div class="flex items-center gap-2 flex-1 min-w-0">
+                <%= link_to team.name, team_path(team), class: "text-lg font-semibold text-blue-500 hover:text-blue-600 truncate" %>
+                <% if team.owner_id == current_user.id %>
+                  <span class="badge badge-primary badge-sm">オーナー</span>
+                <% elsif current_user.can_manage_team?(team) %>
+                  <span class="badge badge-secondary badge-sm">マスター</span>
+                <% else %>
+                  <span class="badge badge-ghost badge-sm">見習い</span>
+                <% end %>
+              </div>
+
+              <!-- 説明 -->
+              <div class="flex-1 min-w-0 text-sm text-gray-600 truncate">
+                <%= team.description&.truncate(50) || "（説明なし）" %>
+              </div>
+
+              <!-- メンバー数 -->
+              <div class="flex-shrink-0 text-sm text-gray-600">
+                メンバー: <%= team.team_memberships.size %>人
+              </div>
+
+              <!-- 最終更新 -->
+              <div class="flex-shrink-0 text-sm text-gray-500">
+                更新: <%= l team.updated_at, format: :short %>
+              </div>
+
+              <!-- アクション（オーナーのみ） -->
+              <% if team.owner_id == current_user.id %>
+                <div class="flex gap-2 flex-shrink-0">
+                  <%= link_to "編集", edit_team_path(team), class: "text-yellow-500 hover:text-yellow-600 text-sm font-medium" %>
+                  <%= link_to "削除", team_path(team), data: { turbo_method: :delete, turbo_confirm: "本当に削除してもよろしいですか？" }, class: "text-red-500 hover:text-red-600 text-sm font-medium" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <!-- ページネーション -->
