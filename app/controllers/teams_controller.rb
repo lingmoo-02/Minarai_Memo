@@ -5,7 +5,15 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    @teams = current_user.teams.page(params[:page])
+    # オーナーとして作成したチーム + メンバーとして招待されたチームを統合
+    owned_team_ids = current_user.teams.pluck(:id)
+    joined_team_ids = current_user.joined_teams.pluck(:id)
+    all_team_ids = (owned_team_ids + joined_team_ids).uniq
+
+    @teams = Team.where(id: all_team_ids)
+                   .includes(:team_memberships)
+                   .order(updated_at: :desc)
+                   .page(params[:page])
   end
 
   # GET /teams/:id
