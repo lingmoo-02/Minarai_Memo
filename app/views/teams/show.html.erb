@@ -1,51 +1,22 @@
-<div class="max-w-6xl mx-auto px-4 py-8">
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <!-- ヘッダー -->
   <div class="mb-8">
-    <div class="flex justify-between items-start mb-6">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-800"><%= @team.name %></h1>
-        <p class="text-gray-600 mt-2"><%= @team.description %></p>
-      </div>
-      <div class="space-x-2">
-        <%= link_to "編集", edit_team_path(@team), class: "bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded shadow" %>
-        <%= link_to "削除", team_path(@team), method: :delete, data: { turbo_confirm: "本当に削除してもよろしいですか？" }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow" %>
-      </div>
-    </div>
+    <h1 class="text-3xl font-bold text-gray-800 mb-3"><%= @team.name %></h1>
 
-    <div class="grid grid-cols-3 gap-4 mb-8">
-      <div class="bg-white rounded-lg shadow p-4">
-        <p class="text-gray-600 text-sm">メンバー数</p>
-        <p class="text-2xl font-bold text-gray-800"><%= @team.team_memberships.count %></p>
-      </div>
-      <div class="bg-white rounded-lg shadow p-4">
-        <p class="text-gray-600 text-sm">チームノート数</p>
-        <p class="text-2xl font-bold text-gray-800"><%= @team.notes.count %></p>
-      </div>
-      <div class="bg-white rounded-lg shadow p-4">
-        <p class="text-gray-600 text-sm">タグ数</p>
-        <p class="text-2xl font-bold text-gray-800"><%= @team.tags.count %></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- タブナビゲーション -->
-  <div class="border-b border-gray-200 mb-8">
-    <div class="flex space-x-8">
-      <%= link_to "メンバー", team_memberships_path(@team), class: "px-4 py-2 border-b-2 #{request.path.include?('memberships') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-800'} font-semibold transition" %>
-      <%= link_to "チームノート", team_notes_path(@team), class: "px-4 py-2 border-b-2 #{request.path.include?('/notes') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-800'} font-semibold transition" %>
-      <%= link_to "タグ", team_tags_path(@team), class: "px-4 py-2 border-b-2 #{request.path.include?('/tags') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-800'} font-semibold transition" %>
-    </div>
-  </div>
-
-  <!-- コンテンツ -->
-  <div class="bg-white rounded-lg shadow p-6">
-    <% if request.path.include?('memberships') %>
-      <%= render 'team_memberships/index', team: @team, memberships: @team.team_memberships %>
-    <% elsif request.path.include?('/notes') %>
-      <%= render 'team_notes/index', team: @team, notes: @team.notes %>
-    <% elsif request.path.include?('/tags') %>
-      <%= render 'team_tags/index', team: @team, tags: @team.tags %>
+    <!-- チーム説明 -->
+    <% if @team.description.present? %>
+      <p class="text-gray-600 text-base leading-relaxed mb-6">
+        <%= @team.description %>
+      </p>
     <% else %>
-      <p class="text-gray-600">チームの詳細情報を表示します。上のタブから選択してください。</p>
+      <p class="text-gray-400 text-base italic mb-6">
+        （説明はありません）
+      </p>
+    <% end %>
+
+    <!-- メンバーを表示するリンク -->
+    <%= link_to team_memberships_path(@team), class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded shadow transition" do %>
+      <i class="fas fa-users mr-2"></i>メンバーを表示する
     <% end %>
   </div>
 </div>
