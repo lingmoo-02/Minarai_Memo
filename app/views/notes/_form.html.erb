@@ -55,7 +55,6 @@
     <div class="form-control" data-controller="image-preview">
       <label class="label">
         <span class="label-text font-semibold">完成写真</span>
-        <span class="label-text-alt text-gray-500">任意（5MB以下）</span>
       </label>
 
       <!-- プレビューエリア -->
@@ -127,7 +126,7 @@
 
       <details class="dropdown dropdown-bottom w-full">
         <summary class="btn btn-outline w-full justify-start font-normal text-left">
-          <span data-team-selector-target="tagLabel">タグを選択（任意）</span>
+          <span data-team-selector-target="tagLabel">タグを選択</span>
         </summary>
 
         <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-full shadow-md p-2"
@@ -141,9 +140,9 @@
     <!-- 送信ボタン -->
     <div class="flex justify-center gap-4 mt-6">
       <%= form.submit note.persisted? ? "更新する" : "ノートを作成",
-          class: "btn btn-primary btn-wide" %>
+          class: "btn btn-primary" %>
       <%= link_to "戻る", notes_path,
-          class: "btn btn-ghost btn-wide" %>
+          class: "btn btn-ghost" %>
     </div>
   <% end %>
 </div>
