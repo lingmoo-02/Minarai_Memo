@@ -18,7 +18,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/:id
   def show
-    @notes = @team.notes.includes(:tag, :user).order(created_at: :desc)
+    @notes = @team.notes.includes(:tag, :user).order(created_at: :desc).page(params[:page]).per(4)
     @tags = @team.tags
   end
 
