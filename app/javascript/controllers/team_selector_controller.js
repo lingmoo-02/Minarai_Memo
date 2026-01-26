@@ -1,26 +1,46 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["tagSelect"]
+  static targets = ["teamInput", "teamLabel", "tagInput", "tagLabel", "tagMenu"]
 
   connect() {
-    this.updateTags()
+    this.updateTags(this.teamInputTarget.value)
   }
 
-  updateTags() {
-    const teamId = this.element.value
+  selectTeam(event) {
+    event.preventDefault()
+    const teamId = event.target.dataset.value
+    const teamName = event.target.textContent.trim()
 
-    if (!teamId || teamId === "") {
-      // 個人ノート選択時：team_id = null のタグのみ表示
-      this.loadTags(null)
-    } else {
-      // チーム選択時：そのチームのタグのみ表示
-      this.loadTags(teamId)
+    this.teamInputTarget.value = teamId
+    this.teamLabelTarget.textContent = teamName
+
+    // detailsを閉じるため、親のdetails要素を取得して閉じる
+    const details = event.target.closest("details")
+    if (details) {
+      details.open = false
+    }
+
+    this.updateTags(teamId)
+  }
+
+  selectTag(event) {
+    event.preventDefault()
+    const tagId = event.target.dataset.value
+    const tagName = event.target.textContent.trim()
+
+    this.tagInputTarget.value = tagId
+    this.tagLabelTarget.textContent = tagName
+
+    // detailsを閉じるため、親のdetails要素を取得して閉じる
+    const details = event.target.closest("details")
+    if (details) {
+      details.open = false
     }
   }
 
-  loadTags(teamId) {
-    const url = teamId
+  updateTags(teamId) {
+    const url = teamId && teamId !== ""
       ? `/teams/${teamId}/tags.json`
       : `/tags.json`
 
@@ -31,14 +51,27 @@ export default class extends Controller {
   }
 
   renderTagOptions(tags) {
-    const select = this.tagSelectTarget
-    select.innerHTML = '<option value="">タグを選択（任意）</option>'
+    const menu = this.tagMenuTarget
+    menu.innerHTML = ''
+
+    const defaultOption = document.createElement("li")
+    const defaultLink = document.createElement("a")
+    defaultLink.href = "#"
+    defaultLink.dataset.value = ""
+    defaultLink.textContent = "タグを選択（任意）"
+    defaultLink.addEventListener("click", (e) => this.selectTag(e))
+    defaultOption.appendChild(defaultLink)
+    menu.appendChild(defaultOption)
 
     tags.forEach(tag => {
-      const option = document.createElement("option")
-      option.value = tag.id
-      option.textContent = tag.name
-      select.appendChild(option)
+      const li = document.createElement("li")
+      const a = document.createElement("a")
+      a.href = "#"
+      a.dataset.value = tag.id
+      a.textContent = tag.name
+      a.addEventListener("click", (e) => this.selectTag(e))
+      li.appendChild(a)
+      menu.appendChild(li)
     })
   }
 }
