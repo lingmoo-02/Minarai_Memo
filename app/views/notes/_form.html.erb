@@ -21,6 +21,56 @@
       </div>
     <% end %>
 
+    <!-- 画像アップロード -->
+    <div class="form-control" data-controller="image-preview">
+      <label class="label">
+        <span class="label-text font-semibold">
+          完成写真
+          <% unless note.persisted? %>
+            <span class="text-error">*</span>
+          <% end %>
+        </span>
+      </label>
+
+      <!-- プレビューエリア -->
+      <div class="flex justify-center mb-3">
+        <!-- 既存画像（編集時のみ表示） -->
+        <% if note.persisted? && note.note_image? %>
+          <img src="<%= note.note_image_url %>"
+               data-image-preview-target="currentImage"
+               class="max-w-xs h-auto rounded-lg shadow-md" />
+        <% end %>
+
+        <!-- プレビュー画像（新規選択時に表示） -->
+        <img data-image-preview-target="preview"
+             class="max-w-xs h-auto rounded-lg shadow-md hidden" />
+
+        <!-- プレースホルダー（画像未選択時） -->
+        <div data-image-preview-target="placeholder"
+             class="<%= 'hidden' if note.persisted? && note.note_image? %>">
+          <img src="<%= asset_path('note_placeholder.png') %>"
+               class="max-w-xs h-auto rounded-lg opacity-50" />
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <%= form.file_field :note_image,
+            accept: "image/*",
+            data: {
+              image_preview_target: "input",
+              action: "change->image-preview#previewImage"
+            },
+            class: "file-input file-input-bordered file-input-neutral" %>
+        <%= form.hidden_field :note_image_cache %>
+      </div>
+
+      <% if note.errors[:note_image].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:note_image].first %></span>
+        </label>
+      <% end %>
+    </div>
+
     <!-- タイトル -->
     <div class="form-control">
       <label class="label">
@@ -47,49 +97,6 @@
       <% if note.errors[:body].any? %>
         <label class="label">
           <span class="label-text-alt text-error"><%= note.errors[:body].first %></span>
-        </label>
-      <% end %>
-    </div>
-
-    <!-- 画像アップロード -->
-    <div class="form-control" data-controller="image-preview">
-      <label class="label">
-        <span class="label-text font-semibold">完成写真</span>
-      </label>
-
-      <!-- プレビューエリア -->
-      <div class="flex justify-center mb-3">
-        <!-- 既存画像（編集時のみ表示） -->
-        <% if note.persisted? && note.note_image? %>
-          <img src="<%= note.note_image_url %>"
-               data-image-preview-target="currentImage"
-               class="max-w-xs h-auto rounded-lg shadow-md" />
-        <% end %>
-
-        <!-- プレビュー画像（新規選択時に表示） -->
-        <img data-image-preview-target="preview"
-             class="max-w-xs h-auto rounded-lg shadow-md hidden" />
-
-        <!-- プレースホルダー（画像未選択時） -->
-        <div data-image-preview-target="placeholder"
-             class="<%= 'hidden' if note.persisted? && note.note_image? %>">
-          <img src="<%= asset_path('note_placeholder.png') %>"
-               class="max-w-xs h-auto rounded-lg opacity-50" />
-        </div>
-      </div>
-
-      <%= form.file_field :note_image,
-          accept: "image/*",
-          data: {
-            image_preview_target: "input",
-            action: "change->image-preview#previewImage"
-          },
-          class: "file-input file-input-bordered file-input-primary w-full" %>
-      <%= form.hidden_field :note_image_cache %>
-
-      <% if note.errors[:note_image].any? %>
-        <label class="label">
-          <span class="label-text-alt text-error"><%= note.errors[:note_image].first %></span>
         </label>
       <% end %>
     </div>
