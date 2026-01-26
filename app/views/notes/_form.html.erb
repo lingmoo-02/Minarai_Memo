@@ -96,36 +96,46 @@
     </div>
 
     <!-- チーム選択 -->
-    <div class="form-control">
+    <div class="form-control" data-controller="team-selector">
       <label class="label">
         <span class="label-text font-semibold">チーム</span>
-        <span class="label-text-alt text-gray-500">任意</span>
       </label>
-      <%= form.collection_select :team_id,
-          current_user.joined_teams.order(:name), :id, :name,
-          { prompt: "個人ノート" },
-          {
-            class: "select select-bordered w-full",
-            data: {
-              controller: "team-selector",
-              action: "change->team-selector#updateTags"
-            }
-          } %>
+
+      <details class="dropdown dropdown-bottom w-full">
+        <summary class="btn btn-outline w-full justify-start font-normal text-left">
+          <span data-team-selector-target="teamLabel">個人ノート</span>
+        </summary>
+
+        <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-full shadow-md p-2">
+          <li><a href="#" data-value="" data-action="click->team-selector#selectTeam">個人ノート</a></li>
+          <% current_user.joined_teams.order(:name).each do |team| %>
+            <li><a href="#" data-value="<%= team.id %>" data-action="click->team-selector#selectTeam">
+              <%= team.name %>
+            </a></li>
+          <% end %>
+        </ul>
+      </details>
+
+      <%= form.hidden_field :team_id, data: { target: "team-selector.teamInput" } %>
     </div>
 
     <!-- タグ選択 -->
     <div class="form-control">
       <label class="label">
         <span class="label-text font-semibold">タグ</span>
-        <span class="label-text-alt text-gray-500">任意</span>
       </label>
-      <%= form.collection_select :tag_id,
-          Tag.where(team_id: nil).order(:name), :id, :name,
-          { prompt: "タグを選択（任意）" },
-          {
-            class: "select select-bordered w-full",
-            data: { target: "team-selector.tagSelect" }
-          } %>
+
+      <details class="dropdown dropdown-bottom w-full">
+        <summary class="btn btn-outline w-full justify-start font-normal text-left">
+          <span data-team-selector-target="tagLabel">タグを選択（任意）</span>
+        </summary>
+
+        <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-full shadow-md p-2"
+            data-team-selector-target="tagMenu">
+        </ul>
+      </details>
+
+      <%= form.hidden_field :tag_id, data: { target: "team-selector.tagInput" } %>
     </div>
 
     <!-- 送信ボタン -->
@@ -133,7 +143,7 @@
       <%= form.submit note.persisted? ? "更新する" : "ノートを作成",
           class: "btn btn-primary btn-wide" %>
       <%= link_to "戻る", notes_path,
-          class: "btn btn-ghost" %>
+          class: "btn btn-ghost btn-wide" %>
     </div>
   <% end %>
 </div>
