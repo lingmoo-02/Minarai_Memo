@@ -66,6 +66,10 @@ ja:
       not_saved:
         one: "1件のエラーが発生し、登録できませんでした。"
         other: "%{count}件のエラーが発生し、登録できませんでした。"
+      blank: "を入力してください"
+      taken: "はすでに登録されています"
+      too_short: "は6文字以上で入力してください"
+      confirmation: "が一致していません"
   activerecord:
     attributes:
       user:
@@ -77,6 +81,7 @@ ja:
       note:
         title: "タイトル"
         body: "本文"
+        note_image: "完成写真"
         tag_id: "タグ"
       tag:
         name: "タグ名"
@@ -95,40 +100,16 @@ ja:
       models:
         note:
           attributes:
-            title:
-              blank: "を入力してください"
-            body:
-              blank: "を入力してください"
-        user:
-          attributes:
-            name:
-              blank: "を入力してください"
-            email:
-              blank: "を入力してください"
-              taken: "はすでに登録されています"
-            password:
-              blank: "を入力してください"
-              too_short: "は6文字以上で入力してください"
-            password_confirmation:
-              confirmation: "が一致していません"
+            note_image:
+              blank: "写真をアップロードしてください"
         tag:
           attributes:
             name:
-              blank: "を入力してください"
               taken: "はすでに使用されています"
-        team:
-          attributes:
-            name:
-              blank: "を入力してください"
-              taken: "はすでに登録されています"
-            description:
-              blank: "を入力してください"
         team_membership:
           attributes:
             role:
               blank: "を選択してください"
-            email:
-              blank: "を入力してください"
   enums:
     team_membership:
       role:
