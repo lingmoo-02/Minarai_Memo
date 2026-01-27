@@ -24,6 +24,11 @@ export default class extends Controller {
       const materials = await response.json()
 
       this.renderMaterialOptions(materials)
+
+      // データがない場合は、自動的に新規入力モードを有効化
+      if (materials.length === 0) {
+        this.activateNewMaterialMode()
+      }
     } catch (error) {
       console.error('Failed to load materials:', error)
     }
@@ -69,11 +74,7 @@ export default class extends Controller {
 
     if (selectedValue === "") {
       // 新規入力モード
-      this.materialLabelTarget.textContent = selectedName
-      this.customInputTarget.classList.remove("hidden")
-      this.customInputTarget.focus()
-      this.customInputTarget.value = ""
-      this.materialIdTarget.value = ""
+      this.activateNewMaterialMode(selectedName)
     } else {
       // 既存資材選択モード
       this.materialLabelTarget.textContent = selectedName
@@ -81,5 +82,13 @@ export default class extends Controller {
       this.materialIdTarget.value = selectedValue
       this.customInputTarget.value = ""
     }
+  }
+
+  activateNewMaterialMode(labelText = "--新規入力--") {
+    this.materialLabelTarget.textContent = labelText
+    this.customInputTarget.classList.remove("hidden")
+    this.customInputTarget.focus()
+    this.customInputTarget.value = ""
+    this.materialIdTarget.value = ""
   }
 }
