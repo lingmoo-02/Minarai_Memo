@@ -1,25 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "display", "slider"]
+  static targets = ["input", "display"]
 
   connect() {
-    this.syncFromInput()
-  }
-
-  updateFromInput() {
-    this.sliderTarget.value = this.inputTarget.value
-    this.updateDisplay()
-  }
-
-  updateFromSlider() {
-    this.inputTarget.value = this.sliderTarget.value
-    this.updateDisplay()
-  }
-
-  syncFromInput() {
-    const minutes = parseInt(this.inputTarget.value) || 0
-    this.sliderTarget.value = minutes
     this.updateDisplay()
   }
 
