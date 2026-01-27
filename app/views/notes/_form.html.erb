@@ -21,6 +21,21 @@
       </div>
     <% end %>
 
+    <!-- タイトル -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text font-semibold">タイトル</span>
+      </label>
+      <%= form.text_field :title,
+          class: "input input-bordered w-full #{'input-error' if note.errors[:title].any?}",
+          placeholder: "例：カンナでの仕上げ作業" %>
+      <% if note.errors[:title].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:title].first %></span>
+        </label>
+      <% end %>
+    </div>
+
     <!-- 画像アップロード -->
     <div class="form-control" data-controller="image-preview">
       <label class="label">
@@ -67,36 +82,6 @@
       <% if note.errors[:note_image].any? %>
         <label class="label">
           <span class="label-text-alt text-error"><%= note.errors[:note_image].first %></span>
-        </label>
-      <% end %>
-    </div>
-
-    <!-- タイトル -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text font-semibold">タイトル</span>
-      </label>
-      <%= form.text_field :title,
-          class: "input input-bordered w-full #{'input-error' if note.errors[:title].any?}",
-          placeholder: "例：カンナでの仕上げ作業" %>
-      <% if note.errors[:title].any? %>
-        <label class="label">
-          <span class="label-text-alt text-error"><%= note.errors[:title].first %></span>
-        </label>
-      <% end %>
-    </div>
-
-    <!-- 本文 -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text font-semibold">本文</span>
-      </label>
-      <%= form.text_area :body, rows: 5,
-          class: "textarea textarea-bordered w-full #{'textarea-error' if note.errors[:body].any?}",
-          placeholder: "学んだことやポイントを記録してください" %>
-      <% if note.errors[:body].any? %>
-        <label class="label">
-          <span class="label-text-alt text-error"><%= note.errors[:body].first %></span>
         </label>
       <% end %>
     </div>
@@ -165,8 +150,8 @@
           <span class="text-error">*</span>
         </span>
       </label>
-      <%= form.text_field :reflection,
-          class: "input input-bordered w-full #{'input-error' if note.errors[:reflection].any?}",
+      <%= form.text_area :reflection, rows: 5,
+          class: "textarea textarea-bordered w-full #{'textarea-error' if note.errors[:reflection].any?}",
           placeholder: "例：もっと丁寧に仕上げるべきだった" %>
       <% if note.errors[:reflection].any? %>
         <label class="label">
