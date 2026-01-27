@@ -39,4 +39,29 @@ class Note < ApplicationRecord
     return [] if materials.blank?
     materials.split(/[、,]/).map(&:strip).reject(&:blank?)
   end
+
+  # キーワード検索スコープ
+  scope :search_by_keyword, ->(keyword) {
+    return all if keyword.blank?
+
+    sanitized_keyword = sanitize_sql_like(keyword.to_s)
+    where(
+      "title ILIKE :keyword OR reflection ILIKE :keyword OR materials ILIKE :keyword",
+      keyword: "%#{sanitized_keyword}%"
+    )
+  }
+
+  # タグフィルタスコープ
+  scope :filter_by_tag, ->(tag_id) {
+    return all if tag_id.blank?
+    where(tag_id: tag_id)
+  }
+
+  # 日付範囲フィルタスコープ
+  scope :created_between, ->(date_from, date_to) {
+    scope = all
+    scope = scope.where('created_at >= ?', date_from.beginning_of_day) if date_from.present?
+    scope = scope.where('created_at <= ?', date_to.end_of_day) if date_to.present?
+    scope
+  }
 end
