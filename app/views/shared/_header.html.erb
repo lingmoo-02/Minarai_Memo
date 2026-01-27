@@ -10,6 +10,12 @@
       <% if user_signed_in? %>
         <div class="flex items-center space-x-4">
           <span class="hidden lg:inline text-gray-700 font-bold"><%= link_to "ノートを作成", new_note_path %></span>
+          <!-- ブックマーク -->
+          <%= link_to bookmarks_path,
+            class: "flex items-center justify-center min-w-[44px] min-h-[44px] text-gray-700 hover:text-gray-900 transition focus:outline-none focus:ring-2 focus:ring-green-500 rounded-lg",
+            aria: { label: "ブックマーク" } do %>
+            <i class="fas fa-bookmark text-xl"></i>
+          <% end %>
           <!-- ログアウトアイコン -->
           <%= link_to destroy_user_session_path,
             method: :delete,

@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :teams, foreign_key: 'owner_id', dependent: :destroy
   has_many :team_memberships, dependent: :destroy
   has_many :joined_teams, through: :team_memberships, source: :team
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_notes, through: :bookmarks, source: :note
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, uniqueness: true
@@ -53,6 +55,10 @@ class User < ApplicationRecord
 
   def can_view_team_notes?(team)
     team_memberships.exists?(team: team)
+  end
+
+  def bookmarked?(note)
+    bookmarks.exists?(note_id: note.id)
   end
 
 end

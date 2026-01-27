@@ -1,0 +1,17 @@
+<div id="bookmark-button-<%= note.id %>">
+  <% if current_user.bookmarked?(note) %>
+    <%= button_to bookmark_path(note_id: note.id),
+          method: :delete,
+          data: { turbo_method: :delete },
+          class: "text-yellow-500 hover:text-yellow-600 transition-colors bg-none border-0 p-0 cursor-pointer" do %>
+      <i class="fas fa-bookmark text-2xl"></i>
+    <% end %>
+  <% else %>
+    <%= button_to bookmarks_path(note_id: note.id),
+          method: :post,
+          data: { turbo_method: :post },
+          class: "text-gray-400 hover:text-yellow-500 transition-colors bg-none border-0 p-0 cursor-pointer" do %>
+      <i class="far fa-bookmark text-2xl"></i>
+    <% end %>
+  <% end %>
+</div>
