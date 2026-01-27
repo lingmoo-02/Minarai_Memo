@@ -1,7 +1,7 @@
 class Note < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :note_image, presence: true, on: :create
-  validates :materials, presence: true, length: { maximum: 100 }
+  validates :material, presence: true
   validates :work_duration, presence: true, numericality: {
     only_integer: true,
     greater_than: 0,
@@ -12,6 +12,7 @@ class Note < ApplicationRecord
   belongs_to :user
   belongs_to :team, optional: true
   belongs_to :tag, optional: true
+  belongs_to :material, optional: true
   has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_by_users, through: :bookmarks, source: :user
 
