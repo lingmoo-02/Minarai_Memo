@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # Personal notes
   resources :notes
 
+  # Bookmarks
+  resources :bookmarks, only: [:index, :create, :destroy], param: :note_id
+
   # Profile
   resource :profile, only: %i[show edit update]
 
