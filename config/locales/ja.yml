@@ -85,6 +85,7 @@ ja:
         tag_id: "タグ"
         material: "使用した資材"
         material_id: "使用した資材"
+        materials: "使用した資材"
         work_duration: "作業時間"
         reflection: "反省点"
       material:
