@@ -13,8 +13,14 @@ application.register("hello", HelloController)
 import ImagePreviewController from "./image_preview_controller"
 application.register("image-preview", ImagePreviewController)
 
+import MaterialsSelectController from "./materials_select_controller"
+application.register("materials-select", MaterialsSelectController)
+
 import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
 
 import TeamSelectorController from "./team_selector_controller"
 application.register("team-selector", TeamSelectorController)
+
+import WorkDurationController from "./work_duration_controller"
+application.register("work-duration", WorkDurationController)
