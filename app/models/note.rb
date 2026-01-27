@@ -1,15 +1,13 @@
 class Note < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :note_image, presence: true, on: :create
+  validates :materials, presence: true, length: { maximum: 500 }
   validates :work_duration, presence: true, numericality: {
     only_integer: true,
     greater_than: 0,
     less_than_or_equal_to: 480
   }
   validates :reflection, presence: true, length: { maximum: 65_535 }
-
-  # 資材はマスターデータから選択、または新規テキスト入力
-  validate :validate_material_presence
 
   belongs_to :user
   belongs_to :team, optional: true
@@ -36,13 +34,9 @@ class Note < ApplicationRecord
     end
   end
 
-  private
-
-  # 資材の presence バリデーション
-  # material（マスターデータ）または material_name（テキスト入力）のいずれかが必須
-  def validate_material_presence
-    if material.blank? && material_name.blank?
-      errors.add(:material, "を選択または入力してください")
-    end
+  # 資材を配列として取得するメソッド
+  def materials_array
+    return [] if materials.blank?
+    materials.split(/[、,]/).map(&:strip).reject(&:blank?)
   end
 end
