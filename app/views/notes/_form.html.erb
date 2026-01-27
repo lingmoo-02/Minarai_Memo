@@ -94,16 +94,24 @@
           <span class="text-error">*</span>
         </span>
       </label>
-      <select class="select select-bordered w-full #{'select-error' if note.errors[:materials].any?}"
+
+      <select class="select select-bordered w-full #{'select-error' if note.errors[:material].any?}"
               data-controller="materials-select"
+              data-materials-select-target="select"
               data-action="change->materials-select#selectMaterial">
-      <%= form.text_field :materials,
-          class: "input input-bordered w-full mt-2 hidden #{'input-error' if note.errors[:materials].any?}",
+        <option disabled selected value="">選択するか入力してください</option>
+        <option value="">--新規入力--</option>
+      </select>
+
+      <%= form.hidden_field :material_id, data: { materials_select_target: "materialId" } %>
+      <%= form.text_field :material_name,
+          class: "input input-bordered w-full mt-2 hidden #{'input-error' if note.errors[:material].any?}",
           placeholder: "資材名を入力してください",
           data: { materials_select_target: "customInput" } %>
-      <% if note.errors[:materials].any? %>
+
+      <% if note.errors[:material].any? %>
         <label class="label">
-          <span class="label-text-alt text-error"><%= note.errors[:materials].first %></span>
+          <span class="label-text-alt text-error"><%= note.errors[:material].first %></span>
         </label>
       <% end %>
     </div>
