@@ -24,15 +24,9 @@
         </span>
       </div>
     <% end %>
-    <!-- 画像と本文 -->
+    <!-- 画像 -->
     <div class="p-4 flex justify-center">
       <%= image_tag @note.note_image_url, class: "max-w-xs h-auto rounded shadow" %>
-    </div>
-    <!-- 本文 -->
-    <div class="px-4 pb-4">
-      <p class="text-gray-700 whitespace-pre-wrap text-base leading-relaxed">
-        <%= simple_format(@note.body) %>
-      </p>
     </div>
     <!-- 作業詳細情報 -->
     <% if @note.materials.present? || @note.work_duration.present? || @note.reflection.present? %>
