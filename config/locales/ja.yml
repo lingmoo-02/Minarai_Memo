@@ -91,11 +91,15 @@ ja:
       team_membership:
         role: "役割"
         email: "メールアドレス"
+      bookmark:
+        user_id: "ユーザー"
+        note_id: "ノート"
     models:
       user: "ユーザー"
       tag: "タグ"
       team: "チーム"
       team_membership: "チームメンバー"
+      bookmark: "ブックマーク"
     errors:
       models:
         note:
@@ -110,6 +114,13 @@ ja:
           attributes:
             role:
               blank: "を選択してください"
+        bookmark:
+          attributes:
+            user_id:
+              blank: "を入力してください"
+            note_id:
+              blank: "を選択してください"
+              taken: "はすでにブックマークされています"
   enums:
     team_membership:
       role:
@@ -160,3 +171,7 @@ ja:
         title: "新しいタグを作成"
       edit:
         title: "タグを編集"
+    bookmarks:
+      index:
+        title: "ブックマーク一覧"
+        no_bookmarks: "ブックマークしたノートがありません"
