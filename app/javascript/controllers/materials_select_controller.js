@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["select", "customInput", "materialId"]
+  static targets = ["customInput", "materialId", "materialLabel", "materialMenu"]
   static values = { materialsUrl: String }
 
   connect() {
@@ -23,31 +23,60 @@ export default class extends Controller {
       const response = await fetch(url)
       const materials = await response.json()
 
-      // selectの選択肢を更新（最初の2つのoptionは維持）
-      const defaultOptions = Array.from(this.selectTarget.options).slice(0, 2)
-      this.selectTarget.innerHTML = ''
-      defaultOptions.forEach(opt => this.selectTarget.add(opt))
-
-      materials.forEach(material => {
-        const option = new Option(material.name, material.id)
-        this.selectTarget.add(option)
-      })
+      this.renderMaterialOptions(materials)
     } catch (error) {
       console.error('Failed to load materials:', error)
     }
   }
 
+  renderMaterialOptions(materials) {
+    const menu = this.materialMenuTarget
+    menu.innerHTML = ''
+
+    // --新規入力-- オプション
+    const newMaterialOption = document.createElement("li")
+    const newMaterialLink = document.createElement("a")
+    newMaterialLink.href = "#"
+    newMaterialLink.dataset.value = ""
+    newMaterialLink.textContent = "--新規入力--"
+    newMaterialLink.addEventListener("click", (e) => this.selectMaterial(e))
+    newMaterialOption.appendChild(newMaterialLink)
+    menu.appendChild(newMaterialOption)
+
+    // 既存資材を表示
+    materials.forEach(material => {
+      const li = document.createElement("li")
+      const a = document.createElement("a")
+      a.href = "#"
+      a.dataset.value = material.id
+      a.textContent = material.name
+      a.addEventListener("click", (e) => this.selectMaterial(e))
+      li.appendChild(a)
+      menu.appendChild(li)
+    })
+  }
+
   selectMaterial(event) {
-    const selectedValue = event.target.value
+    event.preventDefault()
+    const selectedValue = event.currentTarget.dataset.value
+    const selectedName = event.currentTarget.textContent.trim()
+
+    // details を閉じる
+    const details = event.currentTarget.closest("details")
+    if (details) {
+      details.open = false
+    }
 
     if (selectedValue === "") {
       // 新規入力モード
+      this.materialLabelTarget.textContent = selectedName
       this.customInputTarget.classList.remove("hidden")
       this.customInputTarget.focus()
       this.customInputTarget.value = ""
       this.materialIdTarget.value = ""
     } else {
       // 既存資材選択モード
+      this.materialLabelTarget.textContent = selectedName
       this.customInputTarget.classList.add("hidden")
       this.materialIdTarget.value = selectedValue
       this.customInputTarget.value = ""
