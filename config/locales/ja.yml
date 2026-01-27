@@ -83,6 +83,15 @@ ja:
         body: "本文"
         note_image: "完成写真"
         tag_id: "タグ"
+        material: "使用した資材"
+        material_id: "使用した資材"
+        materials: "使用した資材"
+        work_duration: "作業時間"
+        reflection: "反省点"
+      material:
+        name: "資材名"
+        user_id: "ユーザー"
+        team_id: "チーム"
       tag:
         name: "タグ名"
       team:
@@ -96,6 +105,7 @@ ja:
         note_id: "ノート"
     models:
       user: "ユーザー"
+      material: "資材"
       tag: "タグ"
       team: "チーム"
       team_membership: "チームメンバー"

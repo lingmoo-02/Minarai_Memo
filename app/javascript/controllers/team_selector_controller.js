@@ -21,6 +21,11 @@ export default class extends Controller {
       details.open = false
     }
 
+    // カスタムイベント発火（materials-selectコントローラーに通知）
+    document.dispatchEvent(new CustomEvent('team-changed', {
+      detail: { teamId: teamId }
+    }))
+
     this.updateTags(teamId)
   }
 

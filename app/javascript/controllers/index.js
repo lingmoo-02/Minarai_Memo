@@ -18,3 +18,6 @@ application.register("sidebar", SidebarController)
 
 import TeamSelectorController from "./team_selector_controller"
 application.register("team-selector", TeamSelectorController)
+
+import WorkDurationController from "./work_duration_controller"
+application.register("work-duration", WorkDurationController)

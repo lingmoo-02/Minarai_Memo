@@ -21,6 +21,21 @@
       </div>
     <% end %>
 
+    <!-- タイトル -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text font-semibold">タイトル</span>
+      </label>
+      <%= form.text_field :title,
+          class: "input input-bordered w-full #{'input-error' if note.errors[:title].any?}",
+          placeholder: "例：カンナでの仕上げ作業" %>
+      <% if note.errors[:title].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:title].first %></span>
+        </label>
+      <% end %>
+    </div>
+
     <!-- 画像アップロード -->
     <div class="form-control" data-controller="image-preview">
       <label class="label">
@@ -71,32 +86,68 @@
       <% end %>
     </div>
 
-    <!-- タイトル -->
+    <!-- 使用した資材 -->
     <div class="form-control">
       <label class="label">
-        <span class="label-text font-semibold">タイトル</span>
+        <span class="label-text font-semibold">
+          使用した資材（複数可）
+          <span class="text-error">*</span>
+        </span>
       </label>
-      <%= form.text_field :title,
-          class: "input input-bordered w-full #{'input-error' if note.errors[:title].any?}",
-          placeholder: "例：カンナでの仕上げ作業" %>
-      <% if note.errors[:title].any? %>
+
+      <%= form.text_field :materials,
+          class: "input input-bordered w-full #{'input-error' if note.errors[:materials].any?}",
+          placeholder: "例：石膏ボード、垂木、ネダボンド" %>
+
+      <% if note.errors[:materials].any? %>
         <label class="label">
-          <span class="label-text-alt text-error"><%= note.errors[:title].first %></span>
+          <span class="label-text-alt text-error"><%= note.errors[:materials].first %></span>
         </label>
       <% end %>
     </div>
 
-    <!-- 本文 -->
+    <!-- 作業時間 -->
+    <div class="form-control" data-controller="work-duration">
+      <label class="label">
+        <span class="label-text font-semibold">
+          作業時間
+          <span class="text-error">*</span>
+        </span>
+      </label>
+      <div class="flex items-center gap-2">
+        <%= form.number_field :work_duration,
+            min: 1,
+            max: 480,
+            class: "input input-bordered w-1/3 #{'input-error' if note.errors[:work_duration].any?}",
+            type: "number",
+            placeholder: "かかった時間（分）",
+            data: {
+              work_duration_target: "input",
+              action: "input->work-duration#updateDisplay"
+            } %>
+        <span class="label-text-alt font-semibold" data-work-duration-target="display"></span>
+      </div>
+      <% if note.errors[:work_duration].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:work_duration].first %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <!-- 反省点 -->
     <div class="form-control">
       <label class="label">
-        <span class="label-text font-semibold">本文</span>
+        <span class="label-text font-semibold">
+          次回改善する点
+          <span class="text-error">*</span>
+        </span>
       </label>
-      <%= form.text_area :body, rows: 5,
-          class: "textarea textarea-bordered w-full #{'textarea-error' if note.errors[:body].any?}",
-          placeholder: "学んだことやポイントを記録してください" %>
-      <% if note.errors[:body].any? %>
+      <%= form.text_area :reflection, rows: 5,
+          class: "textarea textarea-bordered w-full #{'textarea-error' if note.errors[:reflection].any?}",
+          placeholder: "例：ボードの継ぎ手に隙間が全くないように貼る" %>
+      <% if note.errors[:reflection].any? %>
         <label class="label">
-          <span class="label-text-alt text-error"><%= note.errors[:body].first %></span>
+          <span class="label-text-alt text-error"><%= note.errors[:reflection].first %></span>
         </label>
       <% end %>
     </div>
