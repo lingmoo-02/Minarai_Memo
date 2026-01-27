@@ -13,9 +13,6 @@ application.register("hello", HelloController)
 import ImagePreviewController from "./image_preview_controller"
 application.register("image-preview", ImagePreviewController)
 
-import MaterialsSelectController from "./materials_select_controller"
-application.register("materials-select", MaterialsSelectController)
-
 import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
 
