@@ -22,7 +22,17 @@ class NotesController < ApplicationController
 
   # POST /notes or /notes.json
   def create
-    @note = current_user.notes.build(note_params)
+    @note = current_user.notes.build(note_params.except(:material_name))
+
+    # 新規資材が入力された場合、自動的に作成
+    if params[:note][:material_name].present?
+      material = Material.find_or_create_by!(
+        name: params[:note][:material_name],
+        user_id: current_user.id,
+        team_id: @note.team_id
+      )
+      @note.material = material
+    end
 
     respond_to do |format|
       if @note.save
@@ -37,8 +47,19 @@ class NotesController < ApplicationController
 
   # PATCH/PUT /notes/1 or /notes/1.json
   def update
+    # 新規資材が入力された場合、自動的に作成
+    params_to_update = note_params.except(:material_name)
+    if params[:note][:material_name].present?
+      material = Material.find_or_create_by!(
+        name: params[:note][:material_name],
+        user_id: current_user.id,
+        team_id: params[:note][:team_id] || @note.team_id
+      )
+      params_to_update[:material_id] = material.id
+    end
+
     respond_to do |format|
-      if @note.update(note_params)
+      if @note.update(params_to_update)
         format.html { redirect_to @note, notice: "ノートが更新されました" }
         format.json { render :show, status: :ok, location: @note }
       else
@@ -71,6 +92,6 @@ class NotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def note_params
-      params.require(:note).permit(:title, :note_image, :note_image_cache, :tag_id, :team_id, :materials, :work_duration, :reflection)
+      params.require(:note).permit(:title, :note_image, :note_image_cache, :tag_id, :team_id, :material_id, :material_name, :work_duration, :reflection)
     end
 end
