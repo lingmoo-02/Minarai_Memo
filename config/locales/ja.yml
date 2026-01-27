@@ -185,3 +185,16 @@ ja:
       index:
         title: "ブックマーク一覧"
         no_bookmarks: "ブックマークしたノートがありません"
+    notes:
+      index:
+        search:
+          keyword_label: "キーワード検索"
+          keyword_placeholder: "タイトル、資材、反省点から検索"
+          tag_label: "タグ"
+          tag_all: "すべて"
+          date_from_label: "開始日"
+          date_to_label: "終了日"
+          submit: "検索"
+          clear: "クリア"
+          results_count: "%{count}件のノートが見つかりました"
+          no_results: "検索条件に一致するノートが見つかりませんでした"

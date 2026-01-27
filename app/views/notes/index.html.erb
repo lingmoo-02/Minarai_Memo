@@ -3,6 +3,73 @@
 <% end %>
 <h1 class="text-4xl text-center p-4 font-bold">ノート一覧</h1>
 
+<!-- 検索フォーム -->
+<div class="container mx-auto px-4 mb-6">
+  <%= form_with url: notes_path, method: :get, local: true, class: "bg-white shadow-md rounded-lg p-4 md:p-6" do |f| %>
+    <!-- キーワード検索 -->
+    <div class="form-control mb-4">
+      <label class="label">
+        <span class="label-text font-semibold">キーワード検索</span>
+      </label>
+      <%= f.text_field :keyword,
+          value: params[:keyword],
+          placeholder: "タイトル、資材、反省点から検索",
+          class: "input input-bordered w-full" %>
+    </div>
+
+    <!-- フィルタ: PC横並び、スマホ縦並び -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <!-- タグフィルタ -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">タグ</span>
+        </label>
+        <%= f.select :tag_id,
+            options_for_select(
+              [["すべて", ""]] + Tag.where(team_id: nil).or(Tag.where(team_id: current_user.team_ids)).pluck(:name, :id),
+              params[:tag_id]
+            ),
+            {},
+            class: "select select-bordered w-full" %>
+      </div>
+
+      <!-- 開始日 -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">開始日</span>
+        </label>
+        <%= f.date_field :date_from,
+            value: params[:date_from],
+            class: "input input-bordered w-full" %>
+      </div>
+
+      <!-- 終了日 -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">終了日</span>
+        </label>
+        <%= f.date_field :date_to,
+            value: params[:date_to],
+            class: "input input-bordered w-full" %>
+      </div>
+    </div>
+
+    <!-- ボタン -->
+    <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-end">
+      <%= f.submit "検索", class: "btn btn-primary" %>
+      <%= link_to "クリア", notes_path, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="container mx-auto px-4 mt-8">
+  <!-- 検索結果表示 -->
+  <% if params[:keyword].present? || params[:tag_id].present? || params[:date_from].present? || params[:date_to].present? %>
+    <div class="mb-4 text-center text-sm text-gray-600">
+      <%= "#{@notes.total_count}件のノートが見つかりました" %>
+    </div>
+  <% end %>
+
 <div class="container mx-auto px-4 mt-8">
   <% if @notes.present? %>
     <!-- スマホ：リスト形式 -->
@@ -15,7 +82,13 @@
       <%= render @notes %>
     </div>
   <% else %>
-    <div class="mb-3 text-center">ノートがありません</div>
+    <div class="mb-3 text-center">
+      <% if params[:keyword].present? || params[:tag_id].present? || params[:date_from].present? || params[:date_to].present? %>
+        検索条件に一致するノートが見つかりませんでした
+      <% else %>
+        ノートがありません
+      <% end %>
+    </div>
   <% end %>
   <%= paginate @notes %>
 </div>

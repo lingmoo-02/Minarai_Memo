@@ -4,7 +4,13 @@ class NotesController < ApplicationController
 
   # GET /notes or /notes.json
   def index
-    @notes = current_user.notes.page(params[:page])
+    @notes = current_user.notes
+                         .search_by_keyword(search_params[:keyword])
+                         .filter_by_tag(search_params[:tag_id])
+                         .created_between(parse_date(search_params[:date_from]),
+                                         parse_date(search_params[:date_to]))
+                         .order(created_at: :desc)
+                         .page(params[:page])
   end
 
   # GET /notes/1 or /notes/1.json
@@ -72,5 +78,18 @@ class NotesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def note_params
       params.require(:note).permit(:title, :note_image, :note_image_cache, :tag_id, :team_id, :materials, :work_duration, :reflection)
+    end
+
+    # 検索パラメータのホワイトリスト
+    def search_params
+      params.permit(:keyword, :tag_id, :date_from, :date_to, :page)
+    end
+
+    # 日付文字列をDateオブジェクトに変換（安全な変換）
+    def parse_date(date_string)
+      return nil if date_string.blank?
+      Date.parse(date_string)
+    rescue ArgumentError
+      nil
     end
 end
