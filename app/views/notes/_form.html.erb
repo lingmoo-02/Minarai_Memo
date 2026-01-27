@@ -94,20 +94,24 @@
           <span class="text-error">*</span>
         </span>
       </label>
+      <select class="select select-bordered w-full #{'select-error' if note.errors[:materials].any?}"
+              data-controller="materials-select"
+              data-action="change->materials-select#selectMaterial">
+        <option disabled selected value="">選択するか入力してください</option>
+        <option value="木材">木材</option>
+        <option value="金属">金属</option>
+        <option value="塗料">塗料</option>
+        <option value="接着剤">接着剤</option>
+        <option value="紙やすり">紙やすり</option>
+        <option value="ネジ・釘">ネジ・釘</option>
+        <option value="ワックス">ワックス</option>
+        <option value="ニス">ニス</option>
+        <option value="">--カスタム入力--</option>
+      </select>
       <%= form.text_field :materials,
-          list: "materials-datalist",
-          class: "input input-bordered w-full #{'input-error' if note.errors[:materials].any?}",
-          placeholder: "例：木材、金属、塗料など" %>
-      <datalist id="materials-datalist">
-        <option value="木材">
-        <option value="金属">
-        <option value="塗料">
-        <option value="接着剤">
-        <option value="紙やすり">
-        <option value="ネジ・釘">
-        <option value="ワックス">
-        <option value="ニス">
-      </datalist>
+          class: "input input-bordered w-full mt-2 hidden #{'input-error' if note.errors[:materials].any?}",
+          placeholder: "資材名を入力してください",
+          data: { materials_select_target: "customInput" } %>
       <% if note.errors[:materials].any? %>
         <label class="label">
           <span class="label-text-alt text-error"><%= note.errors[:materials].first %></span>
@@ -122,19 +126,34 @@
           作業時間
           <span class="text-error">*</span>
         </span>
+        <span class="label-text-alt font-semibold" data-work-duration-target="display"></span>
       </label>
-      <%= form.number_field :work_duration,
-          min: 1,
-          max: 480,
-          class: "input input-bordered w-full #{'input-error' if note.errors[:work_duration].any?}",
-          placeholder: "作業にかかった時間（分）",
-          data: {
-            work_duration_target: "input",
-            action: "input->work-duration#updateDisplay"
-          } %>
-      <label class="label">
-        <span class="label-text-alt" data-work-duration-target="display"></span>
-      </label>
+
+      <!-- スライダー -->
+      <input type="range"
+             min="1"
+             max="480"
+             class="range range-primary w-full"
+             data-work-duration-target="slider"
+             data-action="input->work-duration#updateFromSlider" />
+      <div class="flex w-full justify-between px-2 text-xs">
+        <span>1分</span>
+        <span>480分（8時間）</span>
+      </div>
+
+      <!-- 数値入力 -->
+      <div class="mt-3">
+        <%= form.number_field :work_duration,
+            min: 1,
+            max: 480,
+            class: "input input-bordered w-full #{'input-error' if note.errors[:work_duration].any?}",
+            placeholder: "作業にかかった時間（分）",
+            data: {
+              work_duration_target: "input",
+              action: "input->work-duration#updateFromInput"
+            } %>
+      </div>
+
       <% if note.errors[:work_duration].any? %>
         <label class="label">
           <span class="label-text-alt text-error"><%= note.errors[:work_duration].first %></span>
