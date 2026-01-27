@@ -83,6 +83,9 @@ ja:
         body: "本文"
         note_image: "完成写真"
         tag_id: "タグ"
+        materials: "使用した資材"
+        work_duration: "作業時間"
+        reflection: "反省点"
       tag:
         name: "タグ名"
       team:

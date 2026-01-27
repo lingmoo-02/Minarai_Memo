@@ -34,6 +34,36 @@
         <%= simple_format(@note.body) %>
       </p>
     </div>
+    <!-- 作業詳細情報 -->
+    <% if @note.materials.present? || @note.work_duration.present? || @note.reflection.present? %>
+      <div class="px-4 pb-4 border-t pt-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- 使用した資材 -->
+          <% if @note.materials.present? %>
+            <div>
+              <h3 class="text-sm font-semibold text-gray-600 mb-1">使用した資材</h3>
+              <p class="text-gray-800"><%= @note.materials %></p>
+            </div>
+          <% end %>
+
+          <!-- 作業時間 -->
+          <% if @note.work_duration.present? %>
+            <div>
+              <h3 class="text-sm font-semibold text-gray-600 mb-1">作業時間</h3>
+              <p class="text-gray-800"><%= @note.work_duration_formatted %></p>
+            </div>
+          <% end %>
+
+          <!-- 反省点 -->
+          <% if @note.reflection.present? %>
+            <div>
+              <h3 class="text-sm font-semibold text-gray-600 mb-1">反省点</h3>
+              <p class="text-gray-800"><%= @note.reflection %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
   <!-- 操作ボタン -->
   <div class="mt-6 flex justify-center space-x-4">

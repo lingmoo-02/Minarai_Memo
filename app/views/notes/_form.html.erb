@@ -101,6 +101,80 @@
       <% end %>
     </div>
 
+    <!-- 使用した資材 -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text font-semibold">
+          使用した資材
+          <span class="text-error">*</span>
+        </span>
+      </label>
+      <%= form.text_field :materials,
+          list: "materials-datalist",
+          class: "input input-bordered w-full #{'input-error' if note.errors[:materials].any?}",
+          placeholder: "例：木材、金属、塗料など" %>
+      <datalist id="materials-datalist">
+        <option value="木材">
+        <option value="金属">
+        <option value="塗料">
+        <option value="接着剤">
+        <option value="紙やすり">
+        <option value="ネジ・釘">
+        <option value="ワックス">
+        <option value="ニス">
+      </datalist>
+      <% if note.errors[:materials].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:materials].first %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <!-- 作業時間 -->
+    <div class="form-control" data-controller="work-duration">
+      <label class="label">
+        <span class="label-text font-semibold">
+          作業時間
+          <span class="text-error">*</span>
+        </span>
+      </label>
+      <%= form.number_field :work_duration,
+          min: 1,
+          max: 480,
+          class: "input input-bordered w-full #{'input-error' if note.errors[:work_duration].any?}",
+          placeholder: "作業にかかった時間（分）",
+          data: {
+            work_duration_target: "input",
+            action: "input->work-duration#updateDisplay"
+          } %>
+      <label class="label">
+        <span class="label-text-alt" data-work-duration-target="display"></span>
+      </label>
+      <% if note.errors[:work_duration].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:work_duration].first %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <!-- 反省点 -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text font-semibold">
+          反省点
+          <span class="text-error">*</span>
+        </span>
+      </label>
+      <%= form.text_field :reflection,
+          class: "input input-bordered w-full #{'input-error' if note.errors[:reflection].any?}",
+          placeholder: "例：もっと丁寧に仕上げるべきだった" %>
+      <% if note.errors[:reflection].any? %>
+        <label class="label">
+          <span class="label-text-alt text-error"><%= note.errors[:reflection].first %></span>
+        </label>
+      <% end %>
+    </div>
+
     <!-- チーム選択 -->
     <div class="form-control" data-controller="team-selector">
       <label class="label">

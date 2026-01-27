@@ -71,6 +71,6 @@ class NotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def note_params
-      params.require(:note).permit(:title, :body, :note_image, :note_image_cache, :tag_id, :team_id)
+      params.require(:note).permit(:title, :body, :note_image, :note_image_cache, :tag_id, :team_id, :materials, :work_duration, :reflection)
     end
 end
