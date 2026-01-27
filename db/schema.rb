@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_27_014652) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_27_014657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_27_014652) do
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
+  create_table "materials", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "team_id", "user_id"], name: "index_materials_on_name_and_team_id_and_user_id", unique: true
+    t.index ["team_id"], name: "index_materials_on_team_id"
+    t.index ["user_id"], name: "index_materials_on_user_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -33,9 +44,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_27_014652) do
     t.string "note_image"
     t.bigint "tag_id"
     t.bigint "team_id"
-    t.string "materials"
     t.integer "work_duration"
     t.string "reflection"
+    t.bigint "material_id"
+    t.text "materials"
+    t.index ["material_id"], name: "index_notes_on_material_id"
     t.index ["tag_id"], name: "index_notes_on_tag_id"
     t.index ["team_id", "created_at"], name: "index_notes_on_team_id_and_created_at"
     t.index ["team_id"], name: "index_notes_on_team_id"
@@ -90,6 +103,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_27_014652) do
 
   add_foreign_key "bookmarks", "notes"
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "materials", "teams"
+  add_foreign_key "materials", "users"
+  add_foreign_key "notes", "materials"
   add_foreign_key "notes", "tags"
   add_foreign_key "notes", "teams"
   add_foreign_key "notes", "users"
