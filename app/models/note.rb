@@ -6,6 +6,8 @@ class Note < ApplicationRecord
   belongs_to :user
   belongs_to :team, optional: true
   belongs_to :tag, optional: true
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_by_users, through: :bookmarks, source: :user
 
   mount_uploader :note_image, NoteImageUploader
 end
