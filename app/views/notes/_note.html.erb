@@ -1,13 +1,15 @@
 <!-- スマホ用：リスト形式 -->
 <div id="note-id-<%= note.id %>" class="block md:hidden">
   <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-    <%= link_to note_path(note), class: "block" do %>
-      <div class="flex gap-4 h-24">
-        <div class="w-32 h-32 flex-shrink-0">
+    <div class="flex gap-4 h-24">
+      <div class="w-32 h-32 flex-shrink-0">
+        <%= link_to note_path(note), class: "block" do %>
           <%= image_tag note.note_image_url, class: "w-full h-24 object-cover" %>
-        </div>
+        <% end %>
+      </div>
 
-        <div class="p-4 flex-1 flex flex-col">
+      <div class="p-4 flex-1 flex flex-col">
+        <%= link_to note_path(note), class: "block flex-1" do %>
           <h4 class="text-base font-bold mb-2">
             <%= note.title %>
           </h4>
@@ -22,15 +24,25 @@
               <%= note.tag.name %>
             </span>
           <% end %>
-        </div>
+        <% end %>
       </div>
-    <% end %>
+
+      <!-- ブックマークボタン -->
+      <div class="flex items-center pr-2">
+        <%= render 'bookmarks/button', note: note %>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- PC用：グリッド形式 -->
 <div id="note-id-<%= note.id %>-grid" class="hidden md:block">
-  <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+  <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full relative">
+    <!-- ブックマークボタン -->
+    <div class="absolute top-2 right-2 z-10">
+      <%= render 'bookmarks/button', note: note %>
+    </div>
+
     <%= link_to note_path(note), class: "block" do %>
       <%= image_tag note.note_image_url, class: "w-full h-48 object-cover" %>
 

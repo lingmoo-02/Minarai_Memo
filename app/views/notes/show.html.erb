@@ -8,10 +8,13 @@
     <!-- タイトルと作成日時 -->
     <div class="p-4 border-b flex justify-between items-center">
       <h1 class="text-2xl font-bold text-gray-800"><%= @note.title %></h1>
-      <span class="text-sm text-gray-500">
-        <i class="bi bi-calendar"></i>
-        <%= l @note.created_at, format: :short %>
-      </span>
+      <div class="flex items-center gap-4">
+        <%= render 'bookmarks/button', note: @note %>
+        <span class="text-sm text-gray-500">
+          <i class="bi bi-calendar"></i>
+          <%= l @note.created_at, format: :short %>
+        </span>
+      </div>
     </div>
     <!-- タグ表示 -->
     <% if @note.tag.present? %>
