@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # Personal notes
   resources :notes
 
+  # Materials
+  resources :materials, only: [:index]
+
   # Bookmarks
   resources :bookmarks, only: [:index, :create, :destroy], param: :note_id
 
