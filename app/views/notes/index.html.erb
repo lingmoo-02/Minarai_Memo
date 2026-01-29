@@ -5,59 +5,85 @@
 
 <!-- 検索フォーム -->
 <div class="container mx-auto px-4 mb-6">
-  <%= form_with url: notes_path, method: :get, local: true, class: "bg-white shadow-md rounded-lg p-4 md:p-6" do |f| %>
-    <!-- キーワード検索 -->
-    <div class="form-control mb-4">
-      <label class="label">
-        <span class="label-text font-semibold">キーワード検索</span>
-      </label>
-      <%= f.text_field :keyword,
-          value: params[:keyword],
-          placeholder: "タイトル、資材、反省点から検索",
-          class: "input input-bordered w-full" %>
-    </div>
+  <%= form_with url: notes_path, method: :get, local: true,
+                class: "bg-white shadow-md rounded-lg p-4 md:p-6",
+                data: { controller: "search-filter" } do |f| %>
 
-    <!-- フィルタ: PC横並び、スマホ縦並び -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <!-- タグフィルタ -->
-      <div class="form-control">
+    <!-- キーワード検索と詳細フィルタボタン（横並び） -->
+    <div class="flex gap-2 mb-3">
+      <div class="form-control flex-1">
         <label class="label">
-          <span class="label-text font-semibold">タグ</span>
+          <span class="label-text font-semibold">キーワード検索</span>
         </label>
-        <%= f.select :tag_id,
-            options_for_select(
-              [["すべて", ""]] + Tag.where(team_id: nil).or(Tag.where(team_id: current_user.team_ids)).pluck(:name, :id),
-              params[:tag_id]
-            ),
-            {},
-            class: "select select-bordered w-full" %>
-      </div>
-
-      <!-- 開始日 -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-semibold">開始日</span>
-        </label>
-        <%= f.date_field :date_from,
-            value: params[:date_from],
+        <%= f.text_field :keyword,
+            value: params[:keyword],
+            placeholder: "タイトル、資材、反省点から検索",
             class: "input input-bordered w-full" %>
       </div>
 
-      <!-- 終了日 -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-semibold">終了日</span>
-        </label>
-        <%= f.date_field :date_to,
-            value: params[:date_to],
-            class: "input input-bordered w-full" %>
+      <div class="form-control flex-shrink-0 self-end">
+        <button type="button"
+                data-search-filter-target="toggleButton"
+                data-action="click->search-filter#toggle"
+                class="btn btn-outline btn-square"
+                aria-expanded="false"
+                aria-controls="filter-panel"
+                title="詳細フィルタ">
+          <i class="fas fa-sliders text-lg" data-search-filter-target="toggleIcon"></i>
+        </button>
       </div>
     </div>
 
-    <!-- ボタン -->
-    <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-end">
-      <%= f.submit "検索", class: "btn btn-primary" %>
-      <%= link_to "クリア", notes_path, class: "btn btn-ghost" %>
+    <!-- 検索ボタン -->
+    <div class="flex justify-center md:justify-end mb-3">
+      <%= f.submit "検索", class: "btn btn-primary w-full md:w-auto" %>
+    </div>
+
+    <!-- 詳細フィルタパネル（デフォルト非表示） -->
+    <div id="filter-panel"
+         data-search-filter-target="filterPanel"
+         class="hidden border-t border-gray-200 pt-4 mt-2 transition-all duration-300">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <!-- タグフィルタ -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">タグ</span>
+          </label>
+          <%= f.select :tag_id,
+              options_for_select(
+                [["すべて", ""]] + Tag.where(team_id: nil).or(Tag.where(team_id: current_user.team_ids)).pluck(:name, :id),
+                params[:tag_id]
+              ),
+              {},
+              class: "select select-bordered w-full" %>
+        </div>
+
+        <!-- 開始日 -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">開始日</span>
+          </label>
+          <%= f.date_field :date_from,
+              value: params[:date_from],
+              class: "input input-bordered w-full" %>
+        </div>
+
+        <!-- 終了日 -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">終了日</span>
+          </label>
+          <%= f.date_field :date_to,
+              value: params[:date_to],
+              class: "input input-bordered w-full" %>
+        </div>
+      </div>
+
+      <!-- クリアボタン -->
+      <div class="flex justify-end">
+        <%= link_to "クリア", notes_path, class: "btn btn-ghost btn-sm" %>
+      </div>
     </div>
   <% end %>
 </div>
