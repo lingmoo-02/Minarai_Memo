@@ -1,0 +1,27 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "f9a470becc4fbce9a1630c71d3476525d353a4a53eeee0377979a03944c6014b",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/team_memberships_controller.rb",
+      "line": 82,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:team_membership).permit(:email, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TeamMembershipsController",
+        "method": "membership_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "cwe_id": [915],
+      "note": "False positive: :email is used only for User.find_by lookup (line 19), never assigned to model. Only :role is mass-assigned, which is controlled by Strong Parameters and validated by enum on TeamMembership model."
+    }
+  ],
+  "updated": "2026-01-29 00:00:00 +0900",
+  "brakeman_version": "7.0.0"
+}

@@ -103,12 +103,12 @@
   <% if @notes.present? %>
     <!-- スマホ：リスト形式 -->
     <div class="block md:hidden space-y-4 pt-8 pb-8">
-      <%= render @notes %>
+      <%= render partial: 'note', collection: @notes, as: :note %>
     </div>
 
     <!-- PC：グリッド形式 -->
     <div class="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pt-8 pb-8">
-      <%= render @notes %>
+      <%= render partial: 'note', collection: @notes, as: :note %>
     </div>
   <% else %>
     <div class="mb-3 text-center">

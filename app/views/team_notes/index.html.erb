@@ -6,7 +6,7 @@
 
   <% if @notes.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <%= render @notes %>
+      <%= render partial: 'notes/note', collection: @notes, as: :note %>
     </div>
 
     <!-- ページネーション -->
