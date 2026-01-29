@@ -21,3 +21,6 @@ application.register("team-selector", TeamSelectorController)
 
 import WorkDurationController from "./work_duration_controller"
 application.register("work-duration", WorkDurationController)
+
+import SearchFilterController from "./search_filter_controller"
+application.register("search-filter", SearchFilterController)
