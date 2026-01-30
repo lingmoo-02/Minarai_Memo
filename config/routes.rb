@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   root 'static_pages#top'
+  get 'terms', to: 'static_pages#terms'
+  get 'privacy', to: 'static_pages#privacy'
 
   # Personal notes
   resources :notes
