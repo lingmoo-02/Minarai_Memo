@@ -12,6 +12,7 @@
         <h2 class="text-xl font-bold text-gray-700">見習いノート</h2>
       </div>
 
+      <% if user_signed_in? %>
       <div class="p-4 border-b-2 border-green-300">
         <!-- マイページボタン -->
         <%= link_to profile_path,
@@ -43,6 +44,8 @@
           <span>検索</span>
         <% end %>
       </div>
+      <% end %>
+
       <!-- 情報セクション（常に表示） -->
       <div class="p-4 border-b-2 border-green-300">
         <%= link_to terms_path,
@@ -59,6 +62,7 @@
         <% end %>
       </div>
 
+      <% if user_signed_in? %>
       <!-- メニュー項目 -->
       <div class="p-4">
         <!-- ログアウト -->
@@ -70,6 +74,7 @@
           <i class="fa-solid fa-sign-out-alt text-lg"></i>
           <span>ログアウト</span>
         <% end %>
+      <% end %>
       </div>
     </nav>
 
