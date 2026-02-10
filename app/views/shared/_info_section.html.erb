@@ -1,0 +1,14 @@
+<div class="p-4 border-b-2 border-green-300">
+  <%= link_to terms_path,
+      class: "flex items-center space-x-3 px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-green-300 rounded-lg transition",
+      aria: { label: "利用規約" },
+      data: { action: "click->sidebar#close" } do %>
+    <span>利用規約</span>
+  <% end %>
+  <%= link_to privacy_path,
+      class: "flex items-center space-x-3 px-4 py-3 text-gray-700 hover:text-gray-900 hover:bg-green-300 rounded-lg transition",
+      aria: { label: "プライバシーポリシー" },
+      data: { action: "click->sidebar#close" } do %>
+    <span>プライバシーポリシー</span>
+  <% end %>
+</div>
