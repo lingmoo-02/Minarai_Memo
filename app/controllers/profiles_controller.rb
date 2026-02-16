@@ -13,7 +13,10 @@ class ProfilesController < ApplicationController
   end
 
   def show
-    @recent_notes = current_user.notes.order(created_at: :desc).limit(3)
+    @note_dates = current_user.notes
+                              .pluck(:created_at)
+                              .map { |date| date.to_date.to_s }
+                              .uniq
   end
 
   private
