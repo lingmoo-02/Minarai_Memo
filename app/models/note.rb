@@ -64,4 +64,15 @@ class Note < ApplicationRecord
     scope = scope.where('created_at <= ?', date_to.end_of_day) if date_to.present?
     scope
   }
+
+  # 特定の日付（日本時間基準）で作成されたノートを取得するスコープ
+  scope :created_on_date, ->(date) {
+    return all if date.blank?
+
+    # 日付を日本時間のタイムゾーンで解釈し、その日の開始時刻と終了時刻を取得
+    start_time = date.in_time_zone('Tokyo').beginning_of_day
+    end_time = date.in_time_zone('Tokyo').end_of_day
+
+    where(created_at: start_time..end_time)
+  }
 end

@@ -17,7 +17,7 @@ class NotesController < ApplicationController
   def by_date
     date = Date.parse(search_params[:date])
     @notes = current_user.notes
-                         .where('DATE(created_at) = ?', date)
+                         .created_on_date(date)
                          .includes(:tag, :user)
                          .order(created_at: :desc)
 

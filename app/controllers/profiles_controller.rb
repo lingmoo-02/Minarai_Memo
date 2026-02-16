@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
   def show
     @note_dates = current_user.notes
                               .pluck(:created_at)
-                              .map { |date| date.to_date.to_s }
+                              .map { |datetime| datetime.in_time_zone('Tokyo').to_date.to_s }
                               .uniq
   end
 
