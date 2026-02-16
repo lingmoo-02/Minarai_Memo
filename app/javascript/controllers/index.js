@@ -24,3 +24,6 @@ application.register("work-duration", WorkDurationController)
 
 import SearchFilterController from "./search_filter_controller"
 application.register("search-filter", SearchFilterController)
+
+import CalendarController from "./calendar_controller"
+application.register("calendar", CalendarController)

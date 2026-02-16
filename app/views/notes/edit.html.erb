@@ -1,3 +1,5 @@
-<% content_for :title, "Editing note" %>
-<%= render "form", note: @note %>
+<% content_for :title, t('.title') %>
+<div class="min-h-screen bg-gray-50 py-10 px-4 lg:px-8">
+  <%= render "form", note: @note %>
+</div>
 

@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   get 'privacy', to: 'static_pages#privacy'
 
   # Personal notes
-  resources :notes
+  resources :notes do
+    collection do
+      get :by_date
+    end
+  end
 
   # Bookmarks
   resources :bookmarks, only: [:index, :create, :destroy], param: :note_id

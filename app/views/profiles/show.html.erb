@@ -6,10 +6,9 @@
     <!-- ページタイトル -->
     <h1 class="text-4xl text-center font-bold text-gray-800 mb-8">マイページ</h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
+    <div class="flex justify-center">
       <!-- プロフィールカード -->
-      <div class="bg-green-50 rounded-xl shadow-lg p-8 flex flex-col items-center space-y-6">
+      <div class="bg-green-50 rounded-xl shadow-lg p-8 flex flex-col items-center space-y-6 max-w-md w-full">
         <!-- アバター -->
         <div class="flex flex-col items-center w-full">
           <%= image_tag current_user.avatar.url, class: "w-32 h-32 rounded-full shadow-lg border-4 border-green-200 object-cover" %>
@@ -24,24 +23,8 @@
           </div>
         </div>
 
-        <!-- 経験年数 -->
+        <!-- 登録日 -->
         <div class="w-full space-y-4">
-          <div class="flex items-center space-x-3 text-gray-700">
-            <i class="fas fa-calendar text-green-600 text-lg"></i>
-            <span class="text-lg">
-              <span class="font-semibold">経験年数:</span> <%= experience_duration(current_user.created_at) %>
-            </span>
-          </div>
-
-          <!-- 総ノート数 -->
-          <div class="flex items-center space-x-3 text-gray-700">
-            <i class="fas fa-book text-green-600 text-lg"></i>
-            <span class="text-lg">
-              <span class="font-semibold">総ノート数:</span> <%= current_user.notes.count %>件
-            </span>
-          </div>
-
-          <!-- 登録日 -->
           <div class="flex items-center space-x-3 text-gray-700">
             <i class="fas fa-clock text-green-600 text-lg"></i>
             <span class="text-lg">
@@ -50,40 +33,18 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- 最近のノート履歴カード -->
-      <div class="bg-white rounded-xl shadow-lg p-8">
-        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center space-x-2">
-          <span>最近のノート</span>
-        </h3>
+    <!-- カレンダーカード -->
+    <div class="mt-8 max-w-2xl mx-auto">
+      <%= render 'shared/calendar', note_dates: @note_dates %>
+    </div>
 
-        <% if @recent_notes.any? %>
-          <ul class="space-y-0 divide-y divide-gray-200">
-            <% @recent_notes.each do |note| %>
-              <li class="py-4 hover:bg-green-50 transition-colors duration-200 px-0 first:pt-0 last:pb-0">
-                <%= link_to note_path(note), class: "flex flex-col space-y-1 group" do %>
-                  <p class="font-semibold text-gray-800 group-hover:text-green-700 transition-colors duration-200">
-                    <%= truncate(note.title, length: 40) %>
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    <%= time_ago_in_words(note.created_at) %>前
-                  </p>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
-
-          <div class="mt-6 pt-6 border-t border-gray-200">
-            <%= link_to "すべてのノートを見る", notes_path,
-              class: "inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition ease-in-out duration-300 hover:shadow-lg" %>
-          </div>
-        <% else %>
-          <p class="text-center text-gray-500 py-8">
-            まだノートが作成されていません
-          </p>
-        <% end %>
-      </div>
-
+    <!-- ノート表示エリア（初期は空） -->
+    <div id="notes-list" class="mt-6 max-w-4xl mx-auto">
+      <p class="text-center text-gray-500 py-8">
+        カレンダーの日付をクリックすると、その日のノートが表示されます
+      </p>
     </div>
   </div>
 </div>

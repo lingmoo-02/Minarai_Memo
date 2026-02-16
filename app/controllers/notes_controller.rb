@@ -13,6 +13,24 @@ class NotesController < ApplicationController
                          .page(params[:page])
   end
 
+  # GET /notes/by_date
+  def by_date
+    date = Date.parse(search_params[:date])
+    @notes = current_user.notes
+                         .created_on_date(date)
+                         .includes(:tag, :user)
+                         .order(created_at: :desc)
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  rescue ArgumentError
+    @notes = []
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   # GET /notes/1 or /notes/1.json
   def show
   end
@@ -82,7 +100,7 @@ class NotesController < ApplicationController
 
     # 検索パラメータのホワイトリスト
     def search_params
-      params.permit(:keyword, :tag_id, :date_from, :date_to, :page)
+      params.permit(:keyword, :tag_id, :date_from, :date_to, :page, :date)
     end
 
     # 日付文字列をDateオブジェクトに変換（安全な変換）
